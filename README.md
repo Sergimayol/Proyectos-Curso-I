@@ -1,5 +1,13 @@
 # Repositorio para proyectos
 - Acabar proyecto programación 
+   - Memoria
+   - Muros laberinto
 - Acabar proyecto álgebra
+   - Memoria
+   - Apartados del proyecto
 - Acabar proyecto estructura de computadores
+   - Fase ejecución
+   - Memoria
 - Acabar proyecto estadística
+   - Sergi 3,4
+   - Alex 7,8
