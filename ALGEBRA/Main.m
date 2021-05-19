@@ -19,7 +19,7 @@ disp("\n")
 A2 = [1,4,0,-4; 5,1,1,-1; 3,1,-1,-2;-3,4,6,2];
 
 [L2, U2, p2] = LUFactPC(A2);
-P2 = generate_permutation_matrix(p2, true);
+P2 = generarMatrizPermutacion(p2, true);
 
 disp("Row permutation vector")
 disp(p2)
@@ -42,8 +42,8 @@ A3 = [10,-7,0; -3,2,6; 5,-1,5];
 
 [L3,U3,p3,q3] = LUFactPM(A3);
 
-P3 = generate_permutation_matrix(p3, true);
-Q3 = generate_permutation_matrix(q3, false);
+P3 = generarMatrizPermutacion(p3, true);
+Q3 = generarMatrizPermutacion(q3, false);
 
 disp("Row permutation vector")
 disp(p3)
@@ -65,7 +65,7 @@ disp(U3)
 
 [L3_2,U3_2,p3_2] = LUFactPC(A3);
 
-P3_2 = generate_permutation_matrix(p3_2, true);
+P3_2 = generarMatrizPermutacion(p3_2, true);
 
 disp("Row permutation vector")
 disp(p3_2)
