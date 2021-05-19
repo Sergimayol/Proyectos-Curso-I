@@ -15,7 +15,7 @@ function [L, U, w] = PA_LUFact(A)
         end
         
         if A(p, k) == 0
-            printf("A nu admite fact LU")
+            printf("No admite factorización LU")
             return
         end
         
@@ -42,7 +42,7 @@ function [L, U, w] = PA_LUFact(A)
     end
     
     if A(n, n) == 0
-        printf("A nu admite fact LU");
+        printf("No admite factorización LU");
         return;
     end
     
