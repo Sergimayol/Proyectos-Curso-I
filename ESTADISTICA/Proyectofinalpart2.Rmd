@@ -1,0 +1,138 @@
+---
+title:  Proyecto final Parte 2. MAT3 (estadística) GIN2 2020-2021  - Estadística Inferencial
+author: "Álvaro, Pimentel Lorente; Gastón, Panizza de León; Sergi, Mayol Matos; Alejandro, Rodríguez Arguimbau"
+date: ''
+output:
+  html_document: 
+    toc: yes
+  word_document: default
+  pdf_document: 
+    toc: yes
+    number_sections: yes
+urlcolor: blue
+toccolor: blue
+header-includes:
+  \renewcommand{\contentsname}{Contenidos}
+---
+
+
+
+# Parte 2. Estadística Descriptiva.
+##### La ciudad asignada es Shanghai, Shanghai, China y los datos obtenidos de: http://insideairbnb.com/get-the-data.html
+
+## Inicialización
+```{r setup, message = FALSE, warning=FALSE}
+
+#Especifica qué librerias son requeridas para que el código funcione correctamente
+knitr::opts_chunk$set(echo = TRUE)
+require(knitr)
+require(ggplot2)
+require(readr)
+require(dplyr)
+```
+```{r Inicializacion}
+data_city=read_csv("listings.csv", col_types = cols())
+data_city$price=as.numeric(gsub(pattern="[\\$]|[,]",replacement="",data_city$price))
+
+data=na.omit(data_city %>% select(id,host_id,neighbourhood,neighbourhood_cleansed,property_type,accommodates,bedrooms,beds,price,minimum_nights,availability_365,number_of_reviews,review_scores_rating))
+
+head(data)
+
+#Se cambia el nombre de las columnas por unos en castellano
+names(data)[names(data) == "host_id"] <- "anfitrion_id"
+names(data)[names(data) == "neighbourhood"] <- "ciudad"
+names(data)[names(data) == "neighbourhood_cleansed"] <- "distrito"
+names(data)[names(data) == "property_type"] <- "tipo_de_propiedad"
+names(data)[names(data) == "accommodates"] <- "huespedes"
+names(data)[names(data) == "bedrooms"] <- "dormitorios"
+names(data)[names(data) == "beds"] <- "camas"
+names(data)[names(data) == "price"] <- "precio"
+names(data)[names(data) == "minimum_nights"] <- "noches_minimas"
+names(data)[names(data) == "availability_365"] <- "disponibilidad_365"
+names(data)[names(data) == "number_of_reviews"] <- "n_opiniones"
+names(data)[names(data) == "review_scores_rating"] <- "puntuacion_opiniones"
+
+#En la columna distrito, se eliminan los caracteres chinos empleando el gsub para borrar todo lo anterior a '/'
+data$distrito=gsub(".*/","",data$distrito)
+
+#se hace un display de las primeras filas y columnas de 'data'
+head(data)
+
+#se borra el dataframe inicial de la memoria
+(data_city) 
+```
+## Solución ejercicio 1
+
+```{r ej1}
+table(is.na(data$precio))
+media_precio=mean(data$precio)
+media_precio
+sd_precio=sd(data$precio,na.rm = TRUE)
+sd_precio
+n = length(data$precio)
+n
+error_estadandar_media_precio=sd_precio/sqrt(n)
+error_estadandar_media_precio
+```
+
+## Solución ejercicio 2
+
+```{r ej2}
+t.test(data$precio,mu=0,alternative="two.sided",conf.level = 0.95)->sol.ej2
+sol.ej2$conf.int
+alpha=1-0.95
+n
+intervalos = c(media_precio-qt(1-alpha/2,n-1)*sd_precio/sqrt(n),media_precio+qt(1-alpha/2,n-1)*sd_precio/sqrt(n))
+intervalos
+```
+
+## Solución ejercicio 3
+
+```{r ej3}
+table(is.na(data$puntuacion_opiniones))
+media_puntuacion_opiniones=mean(data$puntuacion_opiniones)
+sd_puntuacion_opiniones=sd(data$puntuacion_opiniones,na.rm = TRUE)
+n = length(data$puntuacion_opiniones)
+t.test(data$puntuacion_opiniones,mu=0,alternative="two.sided",conf.level = 0.95)->sol.ej3
+sol.ej3$conf.int
+alpha=1-0.95
+intervalos = c(media_puntuacion_opiniones-qt(1-alpha/2,n-1)*sd_puntuacion_opiniones/sqrt(n),media_puntuacion_opiniones+qt(1-alpha/2,n-1)*sd_puntuacion_opiniones/sqrt(n))
+intervalos
+
+```
+
+## Solución ejercicio 4
+
+```{r ej4}
+
+```
+
+## Solución ejercicio 5
+
+```{r ej5}
+
+```
+
+## Solución ejercicio 6
+
+```{r ej6}
+
+```
+
+## Solución ejercicio 7
+
+```{r ej7}
+
+```
+
+## Solución ejercicio 8
+
+```{r ej8}
+
+```
+
+## Solución ejercicio 9
+
+```{r ej9}
+
+```
