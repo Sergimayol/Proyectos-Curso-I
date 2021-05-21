@@ -1,7 +1,7 @@
 # Repositorio para proyectos
 - Acabar proyecto programación 
    - Memoria
-      - Introduccióm
+      - Introduccin
       - Diseño
       - Conclusiones
    - Muros laberinto
@@ -12,6 +12,7 @@
       - Planteamiento del problema
       - Resolución del problema
    - Apartados del proyecto
+      - Matriz T y metriz T^-1 ✔️
       - a)
       - b)
       - c)
