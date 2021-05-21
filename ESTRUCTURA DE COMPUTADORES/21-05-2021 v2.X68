@@ -37,12 +37,12 @@ FETCH:
 	    CLR.L D4            ; Borramos el contenido del registro de datos para que no tenga el anterior
 	    MOVE.W EPC,D4       ; Movemos EPC a un registro de datos
 	    MULU #2,D4           
-	    MOVE.W 0(A0,D4),EIR ; Calcula el desplazamiento del EPROG seg˙n el EPC
+	    MOVE.W 0(A0,D4),EIR ; Calcula el desplazamiento del EPROG seg√∫n el EPC
 	    ADDQ.W #1,EPC       ; Sumamos 1 al EPC
 	    
-	   * Tenemos qeu sumarle a A0, donde tenemos, la primera direcciÛn de memoria del
-	   * eprog la siguiente posicion de la memoria, es decir, si EPC es 0 ser· A0+0
-	   * si EPC es 1 ser· A0+2 y asÌ continuamente, una vez ya sepamos que dorecciÛn es la 
+	   * Tenemos qeu sumarle a A0, donde tenemos, la primera direcci√≥n de memoria del
+	   * eprog la siguiente posicion de la memoria, es decir, si EPC es 0 ser√° A0+0
+	   * si EPC es 1 ser√° A0+2 y as√≠ continuamente, una vez ya sepamos que dorecci√≥n es la 
 	   * que toca lo tenemos que pasar a EIR
 	       
     ;--- FFETCH: FIN FETCH
@@ -105,6 +105,17 @@ ECOM:
     JMP FETCH
 EADD:
     MOVE.W EIR,D0
+    JSR Xa
+    JSR Xb
+    MOVE.W (A3),D6 ;Guardamos el contenido actual de A4 en D6 para poder sumarlo
+    ADD.W (A4),D6  ;Sumamos el contenido actual de A5 con D6 
+    ;ACTUALIZACI√ìN DE LOS EFLAGS
+    MOVE.W SR,D2   ;Guardamos el SR en un registro intermendio para operar
+    MOVE.W ESR,D3  ;Guardamos el ESR en un registro intermendio para operar
+    JSR EFLAGN     ;Actualizaci√≥n eflag N
+    JSR EFLAGC     ;Actualizaci√≥n eflag C
+    JSR EFLAGZ     ;Actualizaci√≥n eflag Z
+    MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
     JMP FETCH
 ESUB:
     MOVE.W EIR,D0
