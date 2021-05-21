@@ -1,0 +1,285 @@
+---
+title:  Proyecto final Parte 1. MAT3 (estadística) GIN2 2020-2021  - Estadística Descriptiva
+author: "Álvaro, Pimentel Lorente; Gastón, Panizza de León; Sergi, Mayol Matos; Alejandro, Rodríguez Arguimbau"
+date: ''
+output:
+  html_document: 
+    toc: yes
+  word_document: default
+  pdf_document: 
+    toc: yes
+    number_sections: yes
+urlcolor: blue
+toccolor: blue
+header-includes:
+  \renewcommand{\contentsname}{Contenidos}
+---
+
+
+
+# Parte 1. Estadística Descriptiva.
+##### La ciudad asignada es Shanghai, Shanghai, China y los datos obtenidos de: http://insideairbnb.com/get-the-data.html
+
+## Inicialización
+
+```{r setup, message = FALSE, warning=FALSE}
+
+#Especifica qué librerias son requeridas para que el código funcione correctamente
+knitr::opts_chunk$set(echo = TRUE)
+require(knitr)
+require(ggplot2)
+require(readr)
+require(dplyr)
+```
+
+## Solución ejercicio 1
+
+```{r ej1}
+
+data_city=read_csv("listings.csv", col_types = cols())
+data_city$price=as.numeric(gsub(pattern="[\\$]|[,]",replacement="",data_city$price))
+
+data=na.omit(data_city %>% select(id,host_id,neighbourhood,neighbourhood_cleansed,property_type,accommodates,bedrooms,beds,price,minimum_nights,availability_365,number_of_reviews,review_scores_rating))
+
+head(data)
+```
+
+## Solución ejercicio 2
+
+```{r ej2}
+#Se cambia el nombre de las columnas por unos en castellano
+names(data)[names(data) == "host_id"] <- "anfitrion_id"
+names(data)[names(data) == "neighbourhood"] <- "ciudad"
+names(data)[names(data) == "neighbourhood_cleansed"] <- "distrito"
+names(data)[names(data) == "property_type"] <- "tipo_de_propiedad"
+names(data)[names(data) == "accommodates"] <- "huespedes"
+names(data)[names(data) == "bedrooms"] <- "dormitorios"
+names(data)[names(data) == "beds"] <- "camas"
+names(data)[names(data) == "price"] <- "precio"
+names(data)[names(data) == "minimum_nights"] <- "noches_minimas"
+names(data)[names(data) == "availability_365"] <- "disponibilidad_365"
+names(data)[names(data) == "number_of_reviews"] <- "n_opiniones"
+names(data)[names(data) == "review_scores_rating"] <- "puntiacion_opiniones"
+
+#En la columna distrito, se eliminan los caracteres chinos empleando el gsub para borrar todo lo anterior a '/'
+data$distrito=gsub(".*/","",data$distrito)
+
+#se hace un display de las primeras filas y columnas de 'data'
+head(data)
+
+#se borra el dataframe inicial de la memoria
+remove(data_city) 
+
+```
+
+## Solución ejercicio 3
+
+```{r ej3}
+x = data
+
+#Lo siguiente será crear un vector con nuestros raw names.#
+
+Valores_numericos = c("Huéspedes","Dormitorios","Camas","Precio","Noches minímas","Disponibilidad (365)","Número opiniones","Puntuaciones-opiniones")
+
+#Comenzamando por los valores inválidos de nuestro dataframe, hacemos una suma (o una cuenta) de cada columna y  ponemos todos los resultados en un vector, para así poner todos los vectores como columnas de nuestro futuro     dataframe.
+
+Valores_invalidos = c(sum(is.na(x$huespedes)),sum(is.na(x$dormitorios)),sum(is.na(x$camas)),sum(is.na(x$precio)),sum(is.na(x$noches_minimas)),sum(is.na(x$disponibilidad_365)),sum(is.na(x$n_opiniones)),sum(is.na(x$puntiacion_opiniones)))
+
+#Ahora, con la función de mínimos, calculamos todos ellos por columna poniendolos, de nuevo, en un vector.
+
+Minimos= c(min(x$huespedes,na.rm=TRUE),min(x$dormitorios,na.rm=TRUE),min(x$camas,na.rm=TRUE),min(x$precio,na.rm=TRUE),min(x$noches_minimas,na.rm=TRUE),min(x$disponibilidad_365,na.rm=TRUE),min(x$n_opiniones,na.rm=TRUE),min(x$puntiacion_opiniones,na.rm=TRUE))
+
+#Ahora calculamos el primer cuartil igualando la función típica para calcular cuartiles al porcentaje equivalente.
+  
+primer_cuartil =  c(quantile(x$huespedes, probs = 0.25,na.rm = TRUE),quantile(x$dormitorios, probs = 0.25,na.rm = TRUE),quantile(x$camas, probs = 0.25,na.rm = TRUE),quantile(x$precio, probs = 0.25,na.rm = TRUE),quantile(x$noches_minimas, probs = 0.25,na.rm = TRUE),quantile(x$disponibilidad_365, probs = 0.25,na.rm = TRUE),quantile(x$n_opiniones, probs = 0.25,na.rm = TRUE),quantile(x$puntiacion_opiniones, probs = 0.25,na.rm = TRUE))
+
+#Nuevamente realizamos lo mismo que para los mínimos, pero con la función de mediana.
+
+Mediana = c(median(x$huespedes, na.rm =TRUE),median(x$dormitorios, na.rm =TRUE),median(x$camas, na.rm =TRUE),median(x$precio, na.rm =TRUE),median(x$noches_minimas, na.rm =TRUE),median(x$disponibilidad_365, na.rm =TRUE),median(x$n_opiniones, na.rm =TRUE),median(x$puntiacion_opiniones, na.rm =TRUE))
+
+#Esta vez igualaremos la función de cuartiles cuyo equivalente sea el tercer cuartil.
+
+tercer_cuartil= c(quantile(x$huespedes, probs = 0.75,na.rm = TRUE),quantile(x$dormitorios, probs = 0.75,na.rm = TRUE),quantile(x$camas, probs = 0.75,na.rm = TRUE),quantile(x$precio, probs = 0.75,na.rm = TRUE),quantile(x$noches_minimas, probs = 0.75,na.rm = TRUE),quantile(x$disponibilidad_365, probs = 0.75,na.rm = TRUE),quantile(x$n_opiniones, probs = 0.75,na.rm = TRUE),quantile(x$puntiacion_opiniones, probs = 0.75,na.rm = TRUE))
+
+#Una vez más, realizamos la misma estrategia, pero con la función de máximos.
+
+Maximo = c(max(x$huespedes,na.rm=TRUE),max(x$dormitorios,na.rm=TRUE),max(x$camas,na.rm=TRUE),max(x$precio,na.rm=TRUE),max(x$noches_minimas,na.rm=TRUE),max(x$disponibilidad_365,na.rm=TRUE),max(x$n_opiniones,na.rm=TRUE),max(x$puntiacion_opiniones,na.rm=TRUE))
+
+#En esta, además de realizar lo propio con la función de media, tabien utilizaremos una función para el redondeo a 2 decimales.
+
+Media = round(c(mean(x$huespedes, na.rm= TRUE), mean(x$dormitorios, na.rm = TRUE),mean(x$camas, na.rm = TRUE),mean(x$precio, na.rm = TRUE),mean(x$noches_minimas, na.rm = TRUE),mean(x$disponibilidad_365, na.rm = TRUE),mean(x$n_opiniones, na.rm = TRUE),mean(x$puntiacion_opiniones, na.rm = TRUE)),2)
+
+#Volvemos a utilizar la estrategia anterior para calcular la varianza con su función y delimitándola a únicamente a 2 decimales.
+
+Varianza = round(c(var(x$huespedes,na.rm=TRUE),var(x$dormitorios,na.rm=TRUE),var(x$camas,na.rm=TRUE),var(x$precio,na.rm=TRUE),var(x$noches_minimas,na.rm=TRUE),var(x$disponibilidad_365,na.rm=TRUE),var(x$n_opiniones,na.rm=TRUE),var(x$puntiacion_opiniones,na.rm=TRUE)),2)
+
+#Ahora creamos un dataframe con todos los vectores antes creados.
+
+Tabla_final3 = data.frame(Valores_invalidos,Minimos,primer_cuartil,Mediana,tercer_cuartil,Maximo,Media,Varianza, row.names = Valores_numericos)
+
+#Y lo visualizamos.
+
+Tabla_final3
+```
+
+## Solución ejercicio 4
+
+```{r ej4}
+
+#Para hacer una tabla de frecuencias absolutas utilizamos la función table en cada una de sus columnas.
+#Primero con las diferentes ciudades.
+c = table(x$ciudad)
+knitr::kable(c, digits = 2,col.names=c("Ciudades","Freq"))
+
+#Luego con los distritos.
+d = table(x$distrito)
+knitr::kable(d, digits = 2,col.names=c("Distritos","Freq"))
+
+#Y, finalmente, los tipos de propiedad.
+p = table(x$tipo_de_propiedad)
+knitr::kable(p, digits = 2, col.names=c("Tipos de propiedad","Freq"))
+
+```
+
+## Solución ejercicio 5
+
+```{r ej5}
+
+#Utilizamos el comando boxplot para dibujar los diagramas de cajas
+#También utilizamos el comando hist para dibujar los histogramas
+par(mfrow = c(2, 2))
+# Variable camas:
+boxplot(data$camas,  col = 'pink' , border = 'green' , ylim=c(0, 5), main="Camas")
+
+# Variable dormitorios:
+boxplot(data$dormitorios,  col = 'pink' , border = 'green' , ylim=c(0, 5), main="Dormitorios")
+
+# Variable huespedes: 
+boxplot(data$huespedes,  col = 'pink' , border = 'green' , ylim=c(0, 5), main="Huéspedes")
+
+# Variable precio: 
+boxplot(data$precio,  col = 'pink' , border = 'green' , ylim=c(0, 1000), main="Precio")
+
+# Variable noches_minimas: 
+boxplot(data$noches_minimas,  col = 'pink' , border = 'green' , ylim=c(0, 5), main="Noches mínimas")
+
+# Variable disponibilidad_365: 
+boxplot(data$disponibilidad_365,  col = 'pink' , border = 'green' , ylim=c(0, 400), main="Disponibilidad 365")
+
+# Variable n_opiniones:
+boxplot(data$n_opiniones,  col = 'pink' , border = 'green' , ylim=c(0, 10), main="Número opiniones")
+
+# Variable puntiacion_opiniones:
+boxplot(data$puntiacion_opiniones,  col = 'pink' , border = 'green' , ylim=c(0, 100), main="Puntuación opiniones")
+
+par(mfrow = c(1, 1))
+
+par(mfrow = c(3, 3))
+hist(data$camas, col = 'pink' , border = 'green' ,xlim = c(0,20), ylim=c(0, 35000), main="Camas")
+hist(data$dormitorios, col = 'pink' , border = 'green' ,xlim = c(0,10), ylim=c(0, 40000), main="Dormitorios")
+hist(data$huespedes,  col = 'pink' , border = 'green' ,xlim = c(0,20), ylim=c(0, 20000), main="Huéspedes")
+hist(data$precio, col = 'pink' , border = 'green' ,xlim = c(0,15000), ylim=c(0, 40000), main="Precio")
+hist(data$noches_minimas, col = 'pink' , border = 'green' ,xlim = c(0,200), ylim=c(0, 40000), main="Noches mínimas")
+hist(data$disponibilidad_365, col = 'pink' , border = 'green' ,xlim = c(0,365), ylim=c(0, 20000), main="Disponibilidad 365")
+hist(data$n_opiniones, col = 'pink' , border = 'green' ,xlim = c(0,100), ylim=c(0, 40000), main="Número opiniones")
+hist(data$puntiacion_opiniones, col = 'pink' , border = 'green' ,xlim = c(0,100), ylim=c(0, 15000), main="Puntuación opiniones")
+par(mfrow = c(1, 1))
+```
+
+## Solución ejercicio 6
+
+```{r ej6}
+
+#Se genera un dataframe que tiene el Distrito y las veces que se repite
+
+ag = aggregate(data.frame(count = data$distrito), list(value = data$distrito), length);
+knitr::kable(ag, digits = 0,col.names = c("Distritos","Repeticiones"))
+frecuencias <- table(data$distrito)  
+tarta2 <- data.frame(group=frecuencias)       
+
+#Aquellos distritos que no compongan más del 1% se juntan en el grupo "Otros"
+
+tarta2$Distritos <- ifelse(tarta2$group.Freq/sum(tarta2$group.Freq)<0.01,"Otros",as.character(tarta2$group.Var1))  
+agrr <- aggregate(group.Freq ~ Distritos, data = tarta2, FUN = sum)  
+
+
+disp <- arrange(agrr, desc(group.Freq))
+knitr::kable(disp, digits = 0,col.names = c("Distritos","Freq"))
+
+#Se genera un gráfico de tipo tarta
+
+ggplot(agrr, aes(x="", y=group.Freq, fill=Distritos)) + geom_bar(stat="identity", width=1, color="white") + coord_polar("y", start=0) + labs(title="Distritos de Shangai") + theme_void()
+
+
+```
+
+## Solución ejercicio 7
+
+```{r ej7}
+data2 = data.frame(Precio=data$precio,Barrio=data$distrito)
+data2=data2[data2$Barrio != ""| data2$Barrio !="N/A",]
+tabla_precios_barrio=aggregate(data2$Precio~data2$Barrio,FUN = mean, na.action = na.omit)
+names(tabla_precios_barrio)=c("Barrio","Precio medio(€)")
+knitr::kable(tabla_precios_barrio,digits=2)
+```
+
+## Solución ejercicio 8
+
+```{r ej8}
+# Se crea una matriz de gráficos 2 x 2
+par(mfrow = c(2, 2))
+
+# Los 5 barrios más baratos
+media <- reorder(data$distrito, data$precio, mean)
+
+# Diseñamos el boxplot
+boxplot(data$precio ~ media, las = 2, xlab = "", ylab = "", xlim = c(0,5), ylim = c(0,10000), main = "5 barrios más baratos") 
+
+# Los 5 barrios más caros
+media <- reorder(data$distrito, -data$precio, mean)
+
+# Diseñamos el boxplot
+boxplot(data$precio ~ media, las = 2, xlab = "", ylab = "", xlim = c(0,5), ylim = c(0,10000), main = "5 barrios más caros") 
+
+par(mfrow = c(1, 1))
+```
+
+## Solución ejercicio 9
+
+```{r ej9}
+#Se crea un diagrama de dispersión 2 a 2 de las variables "huespedes", "dormitorios", "camas", y "precio"
+disp <- pairs(data[,6:9], col = c("red", "cornflowerblue", "purple"),cex.labels=2.1, labels=c('Huéspedes', 'Dormitorios', 'Camas', 'Precio'), pch = 19, main = "Diagrama de dispersión dos a dos")
+
+```
+
+## Solución ejercicio 10
+
+```{r ej10}
+#Visualiza una tabla de los coeficientes de relación entre las variables dos a dos "huespedes", "dormitorios", "camas", y "precio"
+cor(data[,6:9], use = "pairwise.complete.obs") 
+#por el parámetro "use" se modifica en comportamiento de la funcion "cor", para que solo tenga en cuenta aquellas relaciones que no tienen ningún valor NA, sea en el eje X o Y
+
+```
+
+## Solución ejercicio 11
+
+```{r ej11}
+#Con la función cut indicamos el vector y el número de intervalos que queremos
+intervalo_precio=cut(data$precio, breaks = 5)
+intervalo_camas=cut(data$camas, breaks = 5)
+#Realizamos una tabla de cada variable
+tabla1 <- table(intervalo_camas)
+tabla2 <- table(intervalo_precio)
+print(tabla1)
+print(tabla2)
+```
+
+## Solución ejercicio 12
+
+```{r ej12}
+#La tabla de contingencia vendrá dada por los intervalos de cada variable calculados en el ejercicio 11
+tabla=table(intervalo_precio,intervalo_camas)
+print(tabla)
+#El diagrama de mosaico se obtiene a partir de la tabla de contingencia anterior
+mosaicplot(tabla, main = "diagrama mosaico")
+```
