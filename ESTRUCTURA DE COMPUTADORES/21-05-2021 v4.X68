@@ -173,7 +173,7 @@ EAND:
     JSR Xa
     MOVE.W (A3),D5
     MOVE.W (A4),D6
-    AND.W D5,D6
+    AND.W D6,D5
     ;ACTUALIZACIÓN DE LOS EFLAGS
     MOVE.W SR,D2   ;Guardamos el SR en un registro intermendio para operar
     MOVE.W ESR,D3  ;Guardamos el ESR en un registro intermendio para operar
@@ -184,9 +184,29 @@ EAND:
     
 EOR:
     MOVE.W EIR,D0
+    JSR Xb
+    JSR Xa
+    MOVE.W (A3),D5
+    MOVE.W (A4),D6
+    OR.W D6,D5
+    ;ACTUALIZACIÓN DE LOS EFLAGS
+    MOVE.W SR,D2   ;Guardamos el SR en un registro intermendio para operar
+    MOVE.W ESR,D3  ;Guardamos el ESR en un registro intermendio para operar
+    JSR EFLAGN     ;Actualización eflag N
+    JSR EFLAGZ     ;Actualización eflag Z
+    MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
     JMP FETCH
 ENOT:
     MOVE.W EIR,D0
+    JSR Xb
+    MOVE.W (A3),D5
+    NOT.W D5
+   ;ACTUALIZACIÓN DE LOS EFLAGS
+    MOVE.W SR,D2   ;Guardamos el SR en un registro intermendio para operar
+    MOVE.W ESR,D3  ;Guardamos el ESR en un registro intermendio para operar
+    JSR EFLAGN     ;Actualización eflag N
+    JSR EFLAGZ     ;Actualización eflag Z
+    MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
     JMP FETCH
 ESET:
     MOVE.W EIR,D0
