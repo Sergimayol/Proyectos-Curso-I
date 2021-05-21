@@ -37,12 +37,12 @@ FETCH:
 	    CLR.L D4            ; Borramos el contenido del registro de datos para que no tenga el anterior
 	    MOVE.W EPC,D4       ; Movemos EPC a un registro de datos
 	    MULU #2,D4           
-	    MOVE.W 0(A0,D4),EIR ; Calcula el desplazamiento del EPROG según el EPC
+	    MOVE.W 0(A0,D4),EIR ; Calcula el desplazamiento del EPROG segÃºn el EPC
 	    ADDQ.W #1,EPC       ; Sumamos 1 al EPC
 	    
-	   * Tenemos qeu sumarle a A0, donde tenemos, la primera dirección de memoria del
-	   * eprog la siguiente posicion de la memoria, es decir, si EPC es 0 será A0+0
-	   * si EPC es 1 será A0+2 y así continuamente, una vez ya sepamos que dorección es la 
+	   * Tenemos qeu sumarle a A0, donde tenemos, la primera direcciÃ³n de memoria del
+	   * eprog la siguiente posicion de la memoria, es decir, si EPC es 0 serÃ¡ A0+0
+	   * si EPC es 1 serÃ¡ A0+2 y asÃ­ continuamente, una vez ya sepamos que dorecciÃ³n es la 
 	   * que toca lo tenemos que pasar a EIR
 	       
     ;--- FFETCH: FIN FETCH
@@ -110,60 +110,60 @@ ECOM:
     CMP.W (A4),D5      
     MOVE.W SR,D2   ;Guardamos el SR en un registro intermendio para operar
     MOVE.W ESR,D3  ;Guardamos el ESR en un registro intermendio para operar
-    JSR EFLAGN     ;Actualización eflag N
-    JSR EFLAGC     ;Actualización eflag C
-    JSR EFLAGZ     ;Actualización eflag Z
+    JSR EFLAGN     ;ActualizaciÃ³n eflag N
+    JSR EFLAGC     ;ActualizaciÃ³n eflag C
+    JSR EFLAGZ     ;ActualizaciÃ³n eflag Z
     MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
     JMP FETCH
     
 ;SUMA EL CONTENIDO DE Xb y EL CONTENIDO DE Xa Y LO GUARDA EN Xb
 EADD:
-    ;OPERACIÓN Xb + Xa
+    ;OPERACIÃ“N Xb + Xa
     MOVE.W EIR,D0
     JSR Xb	   ;Salto a subrutinas Xa y Xb para decodificar los operandos
     JSR Xa
     MOVE.W (A3),D5 ;Guardamos el contenido actual de A3 en D5 para poder operar
     ADD.W (A4),D5  ;Sumamos el contenido actual de A4 con D5 
-    ;ACTUALIZACIÓN DE LOS EFLAGS
+    ;ACTUALIZACIÃ“N DE LOS EFLAGS
     MOVE.W SR,D2   ;Guardamos el SR en un registro intermendio para operar
     MOVE.W ESR,D3  ;Guardamos el ESR en un registro intermendio para operar
-    JSR EFLAGN     ;Actualización eflag N
-    JSR EFLAGC     ;Actualización eflag C
-    JSR EFLAGZ     ;Actualización eflag Z
+    JSR EFLAGN     ;ActualizaciÃ³n eflag N
+    JSR EFLAGC     ;ActualizaciÃ³n eflag C
+    JSR EFLAGZ     ;ActualizaciÃ³n eflag Z
     MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
     JMP FETCH
     
 ;RESTA EL CONTENIDO DE Xb y EL CONTENIDO DE Xa Y LO GUARDA EN Xb
 ESUB:
-    ;OPERACIÓN Xb - Xa
+    ;OPERACIÃ“N Xb - Xa
     MOVE.W EIR,D0
     JSR Xb	       ;Salto a subrutinas Xa y Xb para decodificar los operandos
     JSR Xa
     MOVE.W (A3),D5 ;Guardamos el contenido actual de A3 en D5 para poder operar
     NOT.W D5       ;Se realiza el cambio de signo del operando B
-    ADDQ.W #1,D5
-    ADD.W (A4),D5  ;Sumamos, (A+(-B)), el contenido actual de A4 con D5 
-    ;ACTUALIZACIÓN DE LOS EFLAGS
+    ADDQ.W #1,D5   ;(BÂ¯ + 1)
+    ADD.W (A4),D5  ;Sumamos, A âˆ’ B = A + (BÂ¯ + 1). , el contenido actual de A4 con D5 
+    ;ACTUALIZACIÃ“N DE LOS EFLAGS
     MOVE.W SR,D2   ;Guardamos el SR en un registro intermendio para operar
     MOVE.W ESR,D3  ;Guardamos el ESR en un registro intermendio para operar
-    JSR EFLAGN     ;Actualización eflag N
-    JSR EFLAGC     ;Actualización eflag C
-    JSR EFLAGZ     ;Actualización eflag Z
+    JSR EFLAGN     ;ActualizaciÃ³n eflag N
+    JSR EFLAGC     ;ActualizaciÃ³n eflag C
+    JSR EFLAGZ     ;ActualizaciÃ³n eflag Z
     MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
     JMP FETCH
 
 ;CAMBIA EL SIGNO DEL Xb Y LO GUARDA EN Xb
 ENEG:
-    ;NEGACIÓN OPERANDO Xb
+    ;NEGACIÃ“N OPERANDO Xb
     MOVE.W EIR,D0
     JSR Xb         ;Salto a subrutina Xb para decodificar el operando
     MOVE.W (A3),D5 ;Guardamos el contenido actual de A3 en D5 para poder operar
     NOT.W D5       ;Se realiza el cambio de signo del operando B
-    ;ACTUALIZACIÓN DE LOS EFLAGS
+    ;ACTUALIZACIÃ“N DE LOS EFLAGS
     MOVE.W SR,D2   ;Guardamos el SR en un registro intermendio para operar
     MOVE.W ESR,D3  ;Guardamos el ESR en un registro intermendio para operar
-    JSR EFLAGN     ;Actualización eflag N
-    JSR EFLAGZ     ;Actualización eflag Z
+    JSR EFLAGN     ;ActualizaciÃ³n eflag N
+    JSR EFLAGZ     ;ActualizaciÃ³n eflag Z
     MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
     JMP FETCH
 
@@ -186,11 +186,11 @@ EMOV:
     JSR Xb	       ;Salto a subrutinas Xa y Xb para decodificar los operandos
     JSR Xa
     MOVE.W (A4),(A3)
-    ;ACTUALIZACIÓN DE LOS EFLAGS
+    ;ACTUALIZACIÃ“N DE LOS EFLAGS
     MOVE.W SR,D2   ;Guardamos el SR en un registro intermendio para operar
     MOVE.W ESR,D3  ;Guardamos el ESR en un registro intermendio para operar
-    JSR EFLAGN     ;Actualización eflag N
-    JSR EFLAGZ     ;Actualización eflag Z
+    JSR EFLAGN     ;ActualizaciÃ³n eflag N
+    JSR EFLAGZ     ;ActualizaciÃ³n eflag Z
     MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
     JMP FETCH
 ESTO:
@@ -211,7 +211,7 @@ ELOA:
 ;Subrutina que guarda el operando k (en dir. inmediato) en el registro 
 ;de datos D0 y hace una extension de signo.
 K:
-    LSR.W #8,D0
+    LSR.W #8,D0 ; El 8 no es seguro que sea asi
     EXT.W D0
     RTS  
     
