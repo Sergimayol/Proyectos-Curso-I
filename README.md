@@ -8,6 +8,15 @@
 - Acabar proyecto estructura de computadores
    - Fase ejecución
    - Memoria
+      - Introducción
+      - Expliación general
+      - Descripción subrutina
+      - Tablas subrutinas
+      - Tabla registros
+      - Tabla variables
+      - Pruebas
+      - Conclusiones
+      - Código
    - Ejemplos de proyecto: 
    - https://github.com/Zygmut/PRAFIN20
    - https://github.com/Zygmut/PRAFIN19RECU
