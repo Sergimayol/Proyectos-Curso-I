@@ -1,10 +1,21 @@
 # Repositorio para proyectos
 - Acabar proyecto programación 
    - Memoria
+      - Introduccióm
+      - Diseño
+      - Conclusiones
    - Muros laberinto
 - Acabar proyecto álgebra
    - Memoria
+      - Introducción
+      - Discretización del problema
+      - Planteamiento del problema
+      - Resolución del problema
    - Apartados del proyecto
+      - a)
+      - b)
+      - c)
+      - d)
 - Acabar proyecto estructura de computadores
    - Fase ejecución
    - Memoria
