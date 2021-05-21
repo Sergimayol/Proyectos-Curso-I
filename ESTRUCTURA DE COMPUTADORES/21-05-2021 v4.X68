@@ -194,10 +194,20 @@ EMOV:
     MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
     JMP FETCH
 ESTO:
-    MOVE.W EIR,D0
+    MOVE.W EIR, D0
+    JSR DIREC
+    MOVE.W ET6,EPROG(A2) ; o ET7 no lo sé hay que ver i
     JMP FETCH
+;Probablemente haya que modificar los bucles de este método 
 ELOA:
-    MOVE.W EIR,D0
+    MOVE.W EIR, D0
+    JSR DIREC
+    MOVE.W EPROG(A2),ET6 ; o ET7 no lo sé hay que ver i
+    MOVE SR,D2
+    MOVE.W ESR,D3
+    JSR EFLAGN
+    JSR EFLAGZ
+    MOVE.W D3,ESR
     JMP FETCH
     
     ;--- FEXEC: FIN EJECUCION
@@ -313,6 +323,15 @@ EFLAGZ:
     BSET #2,D3
     RTS
 Z:  BCLR #2,D3
+    RTS
+    
+;Subrutina de usuario que devuelve una posicion de memoria, especificada en la 
+;einstruccion, lista para usarse en A2. ; No sé si está bien, hay que comprobarlo
+DIREC: 
+    LSL.W #8,D0
+    LSR.W #8,D0
+    MULU.W #2,D0
+    MOVEA.W D0,A2
     RTS
         
     ;--- FSUBR: FIN SUBRUTINAS
