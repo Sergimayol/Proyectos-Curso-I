@@ -169,7 +169,19 @@ ENEG:
 
 EAND:
     MOVE.W EIR,D0
+    JSR Xb
+    JSR Xa
+    MOVE.W (A3),D5
+    MOVE.W (A4),D6
+    AND.W D5,D6
+    ;ACTUALIZACIÓN DE LOS EFLAGS
+    MOVE.W SR,D2   ;Guardamos el SR en un registro intermendio para operar
+    MOVE.W ESR,D3  ;Guardamos el ESR en un registro intermendio para operar
+    JSR EFLAGN     ;Actualización eflag N
+    JSR EFLAGZ     ;Actualización eflag Z
+    MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
     JMP FETCH
+    
 EOR:
     MOVE.W EIR,D0
     JMP FETCH
