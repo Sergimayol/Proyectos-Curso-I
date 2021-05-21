@@ -1,0 +1,452 @@
+*-----------------------------------------------------------
+* Title      : PRAFIN21
+* Written by : Alejandro Rodriguez Arguimbau y Sergi Mayol Matos
+* Date       : 31/05/2021
+* Description: Emulador de la CDB
+*-----------------------------------------------------------
+    ORG $1000
+EPROG:  DC.W $B803,$BFFC,$E0F0,$C0C0,$50C0,$E108,$C0E1,$50C0,$8803
+        DC.W $8881,$50C0,$6080,$C066,$D110,$0000,$0004,$0003,$0000
+EIR:    DC.W 0 ;eregistro de instruccion
+EPC:    DC.W 0 ;econtador de programa
+ER0:    DC.W 0 ;eregistro R0
+ER1:    DC.W 0 ;eregistro R1
+ER2:    DC.W 0 ;eregistro R2
+ER3:    DC.W 0 ;eregistro R3
+ER4:    DC.W 0 ;eregistro R4
+ER5:    DC.W 0 ;eregistro R5
+ET6:    DC.W 0 ;eregistro T6
+ET7:    DC.W 0 ;eregistro T7
+ESR:    DC.W 0 ;eregistro de estado (00000000 00000NCZ)
+
+        ;VECTOR TEMPORAL
+*CODE:   DC.W 0,0,0,0,0,0,0,0,0 ;0B, 0B, 0E, 0C, 
+*        DC.W 0,0,0,0,0,0,0,0,0    
+
+
+START:
+    CLR.W EPC 
+    LEA EPROG,A0        ;Cargamos las direccion efectiva del EPROG(1000)
+    
+FETCH:
+    ;--- IFETCH: INICIO FETCH
+        ;*** En esta seccion debeis introducir el codigo necesario para cargar
+        ;*** en el EIR la siguiente instruccion a ejecutar, indicada por el EPC
+	    ;*** y dejar listo el EPC para que apunte a la siguiente instruccion
+	    
+	    CLR.L D4            ; Borramos el contenido del registro de datos para que no tenga el anterior
+	    MOVE.W EPC,D4       ; Movemos EPC a un registro de datos
+	    MULU #2,D4           
+	    MOVE.W 0(A0,D4),EIR ; Calcula el desplazamiento del EPROG según el EPC
+	    ADDQ.W #1,EPC       ; Sumamos 1 al EPC
+	    
+	   * Tenemos qeu sumarle a A0, donde tenemos, la primera dirección de memoria del
+	   * eprog la siguiente posicion de la memoria, es decir, si EPC es 0 será A0+0
+	   * si EPC es 1 será A0+2 y así continuamente, una vez ya sepamos que dorección es la 
+	   * que toca lo tenemos que pasar a EIR
+	       
+    ;--- FFETCH: FIN FETCH
+    
+    ;--- IBRDECOD: INICIO SALTO A DECOD
+        ;*** En esta seccion debeis preparar la pila para llamar a la subrutina
+        ;*** DECOD, llamar a la subrutina, y vaciar la pila correctamente,
+        ;*** almacenando el resultado de la decodificacion en D1
+
+	; ESCRIBID VUESTRO CODIGO AQUI
+	MOVE.W #0,-(A7)     ; Reservar espacio en la pila para el resultado
+    MOVE.W EIR,-(A7)    ; Paso de parametro EIR a la pila
+    JSR DECOD           ; Salto a la subrutina
+    ADDQ.W #2,A7        ; vaciar pila
+    MOVE.W (A7)+,D1     ; Guardar resultado en D1
+        
+    ;--- FBRDECOD: FIN SALTO A DECOD
+    
+    ;--- IBREXEC: INICIO SALTO A FASE DE EJECUCION
+        ;*** Esta seccion se usa para saltar a la fase de ejecucion
+        ;*** NO HACE FALTA MODIFICARLA
+    MULU #6,D1
+    MOVEA.L D1,A1
+    JMP JMPLIST(A1)
+JMPLIST:
+    JMP EHLT
+    JMP EJMN
+    JMP EJMZ
+    JMP EJMI
+    JMP ECOM
+    JMP EADD
+    JMP ESUB
+    JMP ENEG
+    JMP EAND
+    JMP EOR
+    JMP ENOT
+    JMP ESET
+    JMP EMOV
+    JMP ESTO
+    JMP ELOA
+    ;--- FBREXEC: FIN SALTO A FASE DE EJECUCION
+    
+    ;--- IEXEC: INICIO EJECUCION
+        ;*** En esta seccion debeis implementar la ejecucion de cada einstr.
+	
+	; ESCRIBID EN CADA ETIQUETA LA FASE DE EJECUCION DE CADA INSTRUCCION
+EHLT:
+    SIMHALT
+EJMN:
+    MOVE.W EIR,D0
+    JMP FETCH
+EJMZ:
+    MOVE.W EIR,D0
+    JMP FETCH
+EJMI:
+    MOVE.W EIR,D0
+    JMP FETCH
+ECOM:
+    MOVE.W EIR,D0
+    JSR Xb
+    JSR Xa
+    MOVE.W (A3),D5
+    CMP.W (A4),D5      
+    MOVE SR,D2
+    MOVE.W ESR,D3
+    JSR EFLAGN     ;Actualización eflag N
+    JSR EFLAGC     ;Actualización eflag C
+    JSR EFLAGZ     ;Actualización eflag Z
+    MOVE.W D3,ESR
+    JMP FETCH
+EADD:
+    MOVE.W EIR,D0
+    JSR Xb
+    JSR Xa
+    MOVE.W (A3),D5 ;Guardamos el contenido actual de A4 en D5 para poder sumarlo
+    ADD.W (A4),D5  ;Sumamos el contenido actual de A5 con D5 
+    ;ACTUALIZACIÓN DE LOS EFLAGS
+    MOVE.W SR,D2   ;Guardamos el SR en un registro intermendio para operar
+    MOVE.W ESR,D3  ;Guardamos el ESR en un registro intermendio para operar
+    JSR EFLAGN     ;Actualización eflag N
+    JSR EFLAGC     ;Actualización eflag C
+    JSR EFLAGZ     ;Actualización eflag Z
+    MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
+    MOVE.W D5,(A5)
+    JMP FETCH
+ESUB:
+    MOVE.W EIR,D0
+    JSR Xb
+    JSR Xa
+    MOVE.W (A3),D5
+    NOT.W D5
+    ADDQ.W #1,D5
+    ADD.W (A4),D5
+    MOVE SR,D2
+    MOVE.W ESR,D3
+    JSR EFLAGN
+    JSR EFLAGC
+    JSR EFLAGZ
+    MOVE.W D3,ESR
+    MOVE.W D5,(A5)
+    JMP FETCH
+ENEG:
+    MOVE.W EIR,D0
+    JSR Xb
+    MOVE.W (A3),D5
+    NOT.W D5
+    MOVE SR,D2
+    MOVE.W ESR,D3
+    JSR EFLAGN
+    JSR EFLAGZ
+    MOVE.W D3,ESR
+    JMP FETCH
+EAND:
+    MOVE.W EIR,D0
+    JMP FETCH
+EOR:
+    MOVE.W EIR,D0
+    JMP FETCH
+ENOT:
+    MOVE.W EIR,D0
+    JMP FETCH
+ESET:
+    MOVE.W EIR,D0
+    JMP FETCH
+EMOV:
+    MOVE.W EIR,D0
+    JSR Xb
+    JSR Xa
+    MOVE.W (A4),(A3)
+    MOVE.W SR,D2
+    MOVE.W ESR,D3
+    JSR EFLAGN  
+    JSR EFLAGZ 
+    MOVE.W D3,ESR
+    JMP FETCH
+ESTO:
+    MOVE.W EIR,D0
+    JMP FETCH
+ELOA:
+    MOVE.W EIR,D0
+    JMP FETCH
+    
+    ;--- FEXEC: FIN EJECUCION
+
+    ;--- ISUBR: INICIO SUBRUTINAS
+        ;*** Aqui debeis incluir las subrutinas que necesite vuestra solucion
+        ;*** SALVO DECOD, que va en la siguiente seccion
+
+	; ESCRIBID VUESTRO CODIGO AQUI
+
+;Subrutina que guarda el operando k (en dir. inmediato) en el registro 
+;de datos D0 y hace una extension de signo.
+K:
+    LSR.W #8,D0
+    EXT.W D0
+    RTS  
+    
+;Subrutina que decodifica el registro del operando A y lo guarda en A4    
+Xa:
+    BTST.L #7,D0
+    BEQ Xa0XX
+    BTST.L #6,D0
+    BEQ Xa10X
+    BTST.L #5,D0
+    BEQ Xa110
+    LEA.L ET7,A4 ;A es T7 ;110
+Xa0XX:
+    BTST #6,D0
+    BEQ Xa00X
+    BTST #5,D0
+    BEQ Xa010
+    LEA.L ER3,A4 ;A es R3 ;011
+    RTS
+Xa00X:
+    BTST #5,D0
+    BEQ Xa000
+    LEA.L ER1,A4 ;A es R1 ;001
+Xa010:
+    LEA.L ER2,A4 ;A es R2 ;010
+Xa000:
+    LEA.L ER0,A4 ;A es R0 ;000
+Xa10X:
+    BTST.L #5,D0
+    BEQ Xa100
+    LEA.L ER5,A4 ;A es R5 ;101
+Xa100: 
+    LEA.L ER4,A4 ;A es R4 ;100   
+Xa110:
+    LEA.L ET6,A4 ;A es T6 ;110
+    
+;Subrutina que decodifica el registro del operando B y lo guarda en A3
+Xb:
+    BTST.L #2,D0
+    BEQ Xb0XX
+    BTST.L #1,D0
+    BEQ Xb10X
+    BTST.L #5,D0
+    BEQ Xb110
+    LEA.L ET7,A3 ;B es T7 ;110
+    RTS
+Xb0XX:
+    BTST #1,D0
+    BEQ Xb00X
+    BTST #0,D0
+    BEQ Xb010
+    LEA.L ER3,A3 ;B es R3 ;011
+    RTS
+Xb00X:
+    BTST #0,D0
+    BEQ Xb000
+    LEA.L ER1,A3 ;B es R1 ;001
+    RTS
+Xb010:
+    LEA.L ER2,A3 ;B es R2 ;010
+    RTS
+Xb000:
+    LEA.L ER0,A3 ;B es R0 ;000
+    RTS
+Xb10X:
+    BTST.L #0,D0
+    BEQ Xb100
+    LEA.L ER5,A3 ;B es R5 ;101
+    RTS
+Xb100: 
+    LEA.L ER4,A3 ;B es R4 ;100  
+    RTS 
+Xb110:
+    LEA.L ET6,A3 ;B es T6 ;110
+    RTS
+
+;Actualizamos flag N
+EFLAGN: 
+    BTST #3,D2
+    BEQ N
+    BSET #1,D3
+    RTS
+N:  BCLR #1,D3
+    RTS
+    
+;Actualizamos flag C
+EFLAGC:
+    BTST #0,D2
+    BEQ C
+    BSET #0,D3
+    RTS
+C:  BCLR #0,D3
+    RTS
+
+;Actualizamos flag Z
+EFLAGZ:
+    BTST #2,D2
+    BEQ Z
+    BSET #2,D3
+    RTS
+Z:  BCLR #2,D3
+    RTS
+        
+    ;--- FSUBR: FIN SUBRUTINAS
+
+    ;--- IDECOD: INICIO DECOD
+        ;*** Tras la etiqueta DECOD, debeis implementar la subrutina de 
+        ;*** decodificacion, que debera ser de libreria, siguiendo la interfaz
+        ;*** especificada en el enunciado
+DECOD:
+	
+    MOVE.W D0,-(A7)
+    MOVE.W 6(A7),D0
+    BTST.L #15,D0
+    BNE BIT1     
+    
+    ;BULCE SI BIT 15 = 1
+    BTST.L #14,D0       ;0  
+    BNE BIT1cero
+    MOVE.W #0,8(A7)
+    JMP FINAL           ;00
+
+BIT1:   
+    BTST.L #14,D0       ;1
+    BNE BIT2 
+    BTST.L #13,D0       ;10
+    BNE BIT5
+    BTST.L #12,D0       ;100
+    BNE BIT6
+    BTST.L #11,D0       ;1000
+    BNE BIT7
+    MOVE.W #4,8(A7)     ;10000
+    JMP FINAL
+ 
+   
+BIT2: 
+    BTST.L #13,D0       ;11
+    BNE BIT3
+    BTST.L #12,D0       ;110
+    BNE BIT4
+    MOVE.W #12,8(A7)
+    JMP FINAL           ;1100
+    
+BIT3:
+    MOVE.W #14,8(A7)
+    JMP FINAL           ;1110
+    
+BIT4: 
+    MOVE.W #13,8(A7)
+    JMP FINAL           ;1101    
+
+BIT5:
+    MOVE.W #12,D0       ;101
+    BNE BIT9
+    MOVE.W #11,D0       ;1010
+    BNE BIT10
+    MOVE.W #8,8(A7)
+    JMP FINAL           ;10100
+    
+    
+BIT6:
+    BTST.L #11,D0       ;1001
+    BNE BIT8
+    MOVE.W #6,8(A7)
+    JMP FINAL           ;10010    
+    
+BIT7:
+    MOVE.W #5,8(A7)
+    JMP FINAL           ;10001   
+    
+BIT8:  
+    MOVE.W #7,8(A7) 
+    JMP FINAL           ;10011 
+   
+BIT9:
+    MOVE.W #11,D0       ;1011
+    BNE BIT11
+    MOVE.W #10,8(A7)
+    JMP FINAL           ;10110
+    
+    
+BIT10:
+    MOVE.W #9,8(A7)
+    JMP FINAL           ;10101    
+    
+BIT11:
+    MOVE.W #11,8(A7)
+    JMP FINAL           ;10111    
+    
+      
+BIT1cero:               ;0
+    BTST.L #13,D0       ;01
+    BEQ BIT2cero  
+    MOVE.W #3,8(A7)     ;011
+    JMP FINAL           ;0110
+    
+BIT2cero:  
+    BTST.L #12,D0       ;010
+    BNE BIT3cero
+    MOVE.W #1,8(A7)
+    JMP FINAL           ;0100
+
+BIT3cero:
+    MOVE.W #2,8(A7)
+    JMP FINAL           ;0101
+    
+        
+FINAL:
+    MOVE.W (A7)+,D0
+    RTS
+    ;--- FDECOD: FIN DECOD
+    END    START
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*~Font name~Courier New~
+*~Font size~14~
+*~Tab type~1~
+*~Tab size~4~
+*~Font name~Courier New~
+*~Font size~10~
+*~Tab type~1~
+*~Tab size~4~
+*~Font name~Courier New~
+*~Font size~14~
+*~Tab type~1~
+*~Tab size~4~
+*~Font name~Courier New~
+*~Font size~14~
+*~Tab type~1~
+*~Tab size~4~
