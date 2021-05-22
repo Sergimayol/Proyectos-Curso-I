@@ -1,8 +1,13 @@
 # Repositorio para proyectos
 - Acabar proyecto programación 
    - Memoria
-      - Introduccin
+      - Introducción 
       - Diseño
+         - Clase mapa
+         - Clase ficha
+         - Clase lecturaMapa ✔️
+         - Clase Laberinto
+         - Clase Casilla
       - Conclusiones
    - Muros laberinto
 - Acabar proyecto álgebra
