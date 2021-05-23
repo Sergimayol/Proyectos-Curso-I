@@ -17,7 +17,7 @@
       - Planteamiento del problema
       - Resolución del problema
    - Apartados del proyecto
-      - Matriz T y metriz T^-1 ✔️
+      - Matriz T y matriz T^-1 ✔️
       - a)
       - b)
       - c)
