@@ -1,5 +1,8 @@
 # Repositorio para proyectos
 - Acabar proyecto programación 
+   -Programa
+      - Muros laberinto
+      - Posicionar la ficha en un lugar random
    - Memoria
       - Introducción 
       - Diseño
@@ -9,7 +12,6 @@
          - Clase Laberinto
          - Clase Casilla
       - Conclusiones
-   - Muros laberinto
 - Acabar proyecto álgebra
    - Memoria
       - Introducción
