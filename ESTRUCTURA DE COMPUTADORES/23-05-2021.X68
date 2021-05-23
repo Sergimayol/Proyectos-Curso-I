@@ -323,7 +323,7 @@ Xb:
     BEQ Xb0XX
     BTST.L #1,D0
     BEQ Xb10X
-    BTST.L #5,D0
+    BTST.L #0,D0
     BEQ Xb110
     LEA.L ET7,A3 ;B es T7 ;110
     RTS
@@ -506,6 +506,7 @@ FINAL:
 *~Font size~14~
 *~Tab type~1~
 *~Tab size~4~
+
 *~Font name~Courier New~
 *~Font size~14~
 *~Tab type~1~
