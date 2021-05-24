@@ -41,6 +41,7 @@ x=susreg(U,y);
 
 #Ejercicio 2:
 #Ponemos la columna 5 como el vector z0
+b=[0;2/9;0;0;1/3;2/9;0;2/9;0]
 #Zona 3 como x0 por tanto
 b=[0;0;1;0;0;0;0;0;0]
 #Finalmente multiplicamos el resultado de la zona 1 de x e y
