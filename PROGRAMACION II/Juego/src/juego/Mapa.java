@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.util.Random;
 import javax.swing.JPanel;
 
 /*
@@ -29,8 +30,8 @@ finalmente las últimas dos lineas contienen donde se encuentra en final/salida 
 public class Mapa extends JPanel {
 
     //ATRIBUTOS QUE CONTIENEN EL NÚMERO DE FILAS Y COLUMNAS DEL MAPA
-    private int filas;
-    private int columnas;
+    private static int filas;
+    private static int columnas;
     //ATRIBUTOS QUE CONTIENE LA POSICIÓN DE LA SALIDA DEL LABERINTO
     private static int filaSalida;
     private static int columnaSalida;
@@ -38,6 +39,9 @@ public class Mapa extends JPanel {
     private int[] ladosCasilla;
     //ATRIBUTO QUE CONTIENE EL NUMERO DE FILAS Y COLUMNAS DEL MAPA
     private Casilla matriz[][];
+    //
+    private static int randomX;
+    private static int randomY;
 
     public Mapa() {
         crearMapa(Laberinto.getFicheroNombre());
@@ -97,6 +101,12 @@ public class Mapa extends JPanel {
                 //este posicionada correctamente
                 y = y + Casilla.getLonguitudLado();
             }
+            Random posicion = new Random();
+            int p = posicion.nextInt(filas);
+            posicion = new Random();
+            int q = posicion.nextInt(columnas);
+            randomX = matriz[p][q].getX();
+            randomY = matriz[p][q].getY();
             //Leemos las dos últimas lineas que contienen la salida del laberinto
             linea = lecturaDatos.lectura();
             filaSalida = Integer.parseInt(linea);
@@ -117,6 +127,20 @@ public class Mapa extends JPanel {
 
     public static int getColumnaSalida() {
         return columnaSalida;
+    }
+    public static int getFilas() {
+        return filas;
+    }
+
+    public static int getColumnas() {
+        return columnas;
+    }
+    
+    public static int getRandomX(){
+        return randomX;
+    }
+    public static int getRandomY(){
+        return randomY;
     }
 
     public static Rectangle2D getCasillaSalida() {

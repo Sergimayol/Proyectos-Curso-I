@@ -12,6 +12,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
+import java.util.Random;
 
 /**
  * @Autores: Sergi Mayol Matos y Alejandro Rodríguez Arguimbau Enlace:
@@ -75,17 +76,25 @@ public class Ficha {
             lab.gameOver();
         }
     }
- 
-     //Método que devuelve un rectángulo del tamaño de la ficha para comprobrar
+
+    //Método que devuelve un rectángulo del tamaño de la ficha para comprobrar
     //si colisiona con otro rectángulo
-    private Rectangle2D hitBoxFicha(){
+    private Rectangle2D hitBoxFicha() {
         return new Rectangle2D.Float(x, y, DIAMETRO_FICHA, DIAMETRO_FICHA);
     }
-    
+
     //Método que tiene la función de devolver si se la ficha ha cochado 
     //con un rectángulo
     private boolean casillaSalida() {
         return hitBoxFicha().intersects(Mapa.getCasillaSalida());
+    }
+
+    public void setCoordX(int x) {
+        this.x = x;
+    }
+
+    public void setCoordY(int y) {
+        this.y = y;
     }
 
 //    //Devuelve un las dimensiones de la casilla de salida

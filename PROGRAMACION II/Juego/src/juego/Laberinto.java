@@ -23,6 +23,7 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -41,7 +42,7 @@ public class Laberinto extends JFrame {
     private JMenuItem reiniciar;
     private JMenuItem salir;
     //Atributo Laberinto el cual contendrá el mapa y la ficha
-   // Laberinto lab;
+    // Laberinto lab;
     //Atributo String que contiene el nombre del mapa que se va a dibujar
     private static String fichero;
     //Atributo Mapa que contiene mapa que se va a dibujar
@@ -53,7 +54,7 @@ public class Laberinto extends JFrame {
     public static void main(String[] args) {
         new Laberinto().inicio();
     }
-    
+
     //Mensaje al llegar a la salids del mapa
     public void gameOver() {
         JOptionPane.showMessageDialog(this, "        HAS GANADO!!!");
@@ -69,7 +70,7 @@ public class Laberinto extends JFrame {
                 Thread.sleep(10);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Laberinto.class.getName()).log(Level.SEVERE, null, ex);
-            }            
+            }
         }
     }
 
@@ -149,11 +150,13 @@ public class Laberinto extends JFrame {
                         //dibujo = new AreaDibujoLaberinto();
                         mapa = new Mapa();
                         ficha = new Ficha();
+                        posicionRandomFichaInicio();
                         System.out.println("MAPA SELECCIONADO: " + fichero);
                         break;
                     case "Reiniciar":
                         //dibujo = new AreaDibujoLaberinto();
                         ficha = new Ficha();
+                        posicionRandomFichaInicio();
                         System.out.println("MAPA: " + fichero + " HA SIDO REINICIADO");
                         break;
                     case "Salir":
@@ -226,6 +229,12 @@ public class Laberinto extends JFrame {
         }
     }
 
+    //Método encargado de posicionar en una casilla aleatoria del laberinto la ficha
+    private void posicionRandomFichaInicio() {
+        ficha.setCoordX(Mapa.getRandomX()+7);
+        ficha.setCoordY(Mapa.getRandomY()+7);
+    }
+
     //Clase encargada de dibujar el mapa y la ficha 
     public class AreaDibujoLaberinto extends JPanel {
 
@@ -233,6 +242,7 @@ public class Laberinto extends JFrame {
         public AreaDibujoLaberinto() {
             //mapa = new Mapa();
             //ficha = new Ficha();
+            posicionRandomFichaInicio();
         }
 
         @Override
