@@ -45,13 +45,23 @@ x=susreg(U,y);
 # b=[0;2/9;0;0;1/3;2/9;0;2/9;0] Vector b = z0
 b=[0.028363;0.169456; 0.087016;0.065603;0.233292;0.080620;0.089856;0.184324;0.061493] Vector #Vector b = z9
 #Zona 3 como x0 por tanto
-b=[0;0;1;0;0;0;0;0;0]
 b1=P*b;
 y=susprog(L,b1);
 x=susreg(U,y);
-  disp("Etapa 10:")
+  disp("Etapa 10:");
   disp(x); #Mostramos el resultado de la variable "z10" por pantalla
-  #Repetimos el proceso para x0 
+  
+  #Repetimos el proceso para x0
+[L,U,P]=lu(invT)
+#Zona 3 como x0 por tanto
+#b=[0;0;1;0;0;0;0;0;0]
+b=[7.6409e-03;2.4227e-01;1.3423e-01;2.3723e-02;2.6524e-01;8.9638e-02;5.0230e-02;1.4435e-01;4.2589e-02] Vector #Vector b = x9
+#Zona 3 como x0 por tanto
+b1=P*b;
+y=susprog(L,b1);
+x=susreg(U,y);
+  disp("Etapa 10:");
+  disp(x); #Mostramos el resultado de la variable "x10" por pantalla
 
 #Ejercicio 3:
 #Para responder a este apartado, tenemos que encontrar el mayor de los valores multiplicados entre x e y
@@ -70,12 +80,13 @@ x=susreg(U,y);
 
 #Ejercicio 4:
 #Multiplicamos x y z para cada una de las zonas
-#Zona 1: 0.031322*
-#Zona 2: 0.166339*
-#Zona 3: 0.085491*
-#Zona 4: 0.070728*
-#Zona 5: 0.228957*
-#Zona 6: 0.078716*
-#Zona 7: 0.092781*
-#Zona 8: 0.184231*
-#Zona 9: 0.061459*
+#Zona 1: 0.031322*0.010455 = 3.2747e-04
+#Zona 2: 0.166339*0.229186 = 0.038123
+#Zona 3: 0.085491*0.125500 = 0.010729
+#Zona 4: 0.070728*0.029745 = 2.1038e-03
+#Zona 5: 0.228957*0.261006 = 0.059759
+#Zona 6: 0.078716*0.088822 = 6.9917e-03 
+#Zona 7: 0.092781*0.056729 = 5.2634e-03
+#Zona 8: 0.184231*0.152195 = 0.028039
+#Zona 9: 0.061459*0.046274 = 2.8440e-03
+
