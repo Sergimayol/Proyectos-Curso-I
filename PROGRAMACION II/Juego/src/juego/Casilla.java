@@ -27,6 +27,8 @@ public class Casilla {
     private int[] ladosCasilla;
     //ATRIBUTO QUE CONTIENE LA LONGUITUD DEL LADO DE UNA CASILLA
     private final static int LONGUITUD_LADO_CASILLA = 40;
+    //
+    private final int ANCHO_MURO = 5;
 
     public Casilla(int posCasillaX, int posCasillaY, Rectangle2D.Float casilla, int[] ladosCasilla) {
         this.posCasillaX = posCasillaX;
@@ -55,22 +57,22 @@ public class Casilla {
         ocupada = false;
     }
 
-    //MÉTODO DE MODIFICA LA COORDENADA X DE UNA CASILLA
+    //MÉTODO QUE MODIFICA LA COORDENADA X DE UNA CASILLA
     public void setX(int x) {
         posCasillaX = x;
     }
 
-    //MÉTODO DE MODIFICA LA COORDENADA Y DE UNA CASILLA
+    //MÉTODO QUE MODIFICA LA COORDENADA Y DE UNA CASILLA
     public void setY(int y) {
         posCasillaY = y;
     }
 
-    //MÉTODO DE DA ACCESO A LA COORDENADA X DE UNA CASILLA
+    //MÉTODO QUE DA ACCESO A LA COORDENADA X DE UNA CASILLA
     public int getX() {
         return posCasillaX;
     }
 
-    //MÉTODO DE DA ACCESO A LA COORDENADA Y DE UNA CASILLA
+    //MÉTODO QUE DA ACCESO A LA COORDENADA Y DE UNA CASILLA
     public int getY() {
         return posCasillaY;
     }
@@ -85,45 +87,48 @@ public class Casilla {
     }
 
     //MÉTODO PARA DIBUJAR LAS CASILLA CORRESPONDIENTE AL .TXT LEIDO
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g) {
         //Variable para comparar si el dato leido del fichero equivale a '1'
         Character uno = '1';
         //Usamos la clase Graphics para dibujar la casilla
         Graphics2D g2D = (Graphics2D) g;
         //Asignamos el color de la casilla y lo pintamos
-        g2D.setColor(Color.CYAN);
-        g2D.fill(casilla);
-        // g2D.draw(casilla);//prueba luego borrar
-
+        //g2D.setColor(Color.CYAN);
+        //g2D.fill(casilla);
+        //g2D.draw(casilla);//prueba luego borrar
+        //
+        Rectangle2D.Float paredCasilla;
         //Cada casilla se compone de 4 lados Norte[0], este[1], sur[2] y oeste[3],
         //donde si en el fichero leido hay un 0 no hay lado y 1 viceversa
         if (ladosCasilla[0] == uno) { //Norte = [0]
             //Norte = (x,y,ladoCasilla,5)
-            Rectangle2D.Float casillaDibujar = new Rectangle2D.Float(posCasillaX,
-                    posCasillaY, LONGUITUD_LADO_CASILLA, 5);
+            paredCasilla = new Rectangle2D.Float(posCasillaX,
+                    posCasillaY, LONGUITUD_LADO_CASILLA, ANCHO_MURO);
             g2D.setColor(Color.BLACK);
-            g2D.fill(casillaDibujar);
+            g2D.fill(paredCasilla);
         }
         if (ladosCasilla[1] == uno) { //Este = [1]
             //Este = (x+ladoCasilla,y,5,ladoCasilla)
-            Rectangle2D.Float casillaDibujar = new Rectangle2D.Float(posCasillaX
-                    + LONGUITUD_LADO_CASILLA - 5, posCasillaY, 5, LONGUITUD_LADO_CASILLA);
+            paredCasilla = new Rectangle2D.Float(posCasillaX
+                    + LONGUITUD_LADO_CASILLA - ANCHO_MURO, posCasillaY,
+                    ANCHO_MURO, LONGUITUD_LADO_CASILLA);
             g2D.setColor(Color.BLACK);
-            g2D.fill(casillaDibujar);
+            g2D.fill(paredCasilla);
         }
         if (ladosCasilla[2] == uno) { //Sur = [2]
             //Sur = (x,y+ladoCasilla,ladoCasilla,5)
-            Rectangle2D.Float casillaDibujar = new Rectangle2D.Float(posCasillaX,
-                    posCasillaY + LONGUITUD_LADO_CASILLA - 5, LONGUITUD_LADO_CASILLA, 5);
+            paredCasilla = new Rectangle2D.Float(posCasillaX,
+                    posCasillaY + LONGUITUD_LADO_CASILLA - ANCHO_MURO,
+                    LONGUITUD_LADO_CASILLA, ANCHO_MURO);
             g2D.setColor(Color.BLACK);
-            g2D.fill(casillaDibujar);
+            g2D.fill(paredCasilla);
         }
         if (ladosCasilla[3] == uno) { //Oeste = [3]
             //Oeste = (x,y,5,ladoCasilla)
-            Rectangle2D.Float casillaDibujar = new Rectangle2D.Float(posCasillaX,
-                    posCasillaY, 5, LONGUITUD_LADO_CASILLA);
+            paredCasilla = new Rectangle2D.Float(posCasillaX,
+                    posCasillaY, ANCHO_MURO, LONGUITUD_LADO_CASILLA);
             g2D.setColor(Color.BLACK);
-            g2D.fill(casillaDibujar);
+            g2D.fill(paredCasilla);
         }
     }
 }

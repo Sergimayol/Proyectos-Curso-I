@@ -31,7 +31,7 @@ public class Ficha {
 
     }
 
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g) {
         //Utilizamos Graphics2D para la visualización
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -44,7 +44,7 @@ public class Ficha {
     }
 
     public void teclaPresionada(KeyEvent ke) {
-        if (!colision()) {
+        if (!casillaSalida()) {
             if ((ke.getKeyCode() == KeyEvent.VK_LEFT)
                     || (ke.getKeyCode() == KeyEvent.VK_A)) {
                 // System.out.println("IZQUIERDA");
@@ -76,18 +76,22 @@ public class Ficha {
         }
     }
  
+     //Método que devuelve un rectángulo del tamaño de la ficha para comprobrar
+    //si colisiona con otro rectángulo
+    private Rectangle2D hitBoxFicha(){
+        return new Rectangle2D.Float(x, y, DIAMETRO_FICHA, DIAMETRO_FICHA);
+    }
+    
     //Método que tiene la función de devolver si se la ficha ha cochado 
     //con un rectángulo
-    private boolean colision() {
-        //rectángulo tamaño ficha para comprobrar si colisiona con un rectángulo
-        Rectangle2D.Float rectanguloFicha = new Rectangle2D.Float(x, y, 30, 30);
-        return rectanguloFicha.intersects(getBounds());
+    private boolean casillaSalida() {
+        return hitBoxFicha().intersects(Mapa.getCasillaSalida());
     }
 
-    //Devuelve un las dimensiones de la casilla de salida
-    private Rectangle getBounds() {
-        return new Rectangle((Casilla.getLonguitudLado() * Mapa.getColumnaSalida())
-                - Casilla.getLonguitudLado(), Casilla.getLonguitudLado() * Mapa.getFilaSalida(),
-                Casilla.getLonguitudLado(), Casilla.getLonguitudLado());
-    }
+//    //Devuelve un las dimensiones de la casilla de salida
+//    private Rectangle getBounds() {
+//        return new Rectangle((Casilla.getLonguitudLado() * Mapa.getColumnaSalida())
+//                - Casilla.getLonguitudLado(), Casilla.getLonguitudLado() * Mapa.getFilaSalida(),
+//                Casilla.getLonguitudLado(), Casilla.getLonguitudLado());
+//    }
 }

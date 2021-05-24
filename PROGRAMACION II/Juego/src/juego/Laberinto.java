@@ -54,7 +54,7 @@ public class Laberinto extends JFrame {
         new Laberinto().inicio();
     }
     
-    //Mensaje al perder el juego
+    //Mensaje al llegar a la salids del mapa
     public void gameOver() {
         JOptionPane.showMessageDialog(this, "        HAS GANADO!!!");
         //Cerrar el juego al ganar, ya que sino se quedaría en bucle
@@ -63,15 +63,13 @@ public class Laberinto extends JFrame {
 
     //Método inicial del programa
     private void inicio() {
-        //lab = new Laberinto();
         while (true) {
+            dibujo.repaint();
             try {
                 Thread.sleep(10);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Laberinto.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            //lab.repaint();
-            dibujo.repaint();
+            }            
         }
     }
 
@@ -170,7 +168,7 @@ public class Laberinto extends JFrame {
 
         //CONFIGURACIÓN CONTENEDOR JPanel contenedor del panelMenu
         JPanel panelMenu = new JPanel();
-        panelMenu.setBackground(Color.BLACK);
+        panelMenu.setBackground(Color.LIGHT_GRAY);
 
         //DECLARACIÓN COMPONENTE JMenuBar (barra de menu)
         JMenuBar barraMenu = new JMenuBar();
@@ -238,9 +236,9 @@ public class Laberinto extends JFrame {
         }
 
         @Override
-        public void paint(Graphics g) {
-            mapa.paint(g);
-            ficha.paint(g);
+        public void paintComponent(Graphics g) {
+            mapa.paintComponent(g);
+            ficha.paintComponent(g);
         }
     }
 }

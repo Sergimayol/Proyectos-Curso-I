@@ -6,7 +6,9 @@
 package juego;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JPanel;
@@ -22,8 +24,7 @@ línea del texto indica en número de filas, y la segunda línea el número de c
 finalmente las últimas dos lineas contienen donde se encuentra en final/salida del laberinto
  */
 /**
- * @Autores: Sergi Mayol Matos y Alejandro Rodríguez Arguimbau
- * Enlace:
+ * @Autores: Sergi Mayol Matos y Alejandro Rodríguez Arguimbau Enlace:
  */
 public class Mapa extends JPanel {
 
@@ -118,23 +119,38 @@ public class Mapa extends JPanel {
         return columnaSalida;
     }
 
-//    public Rectangle getCasillafinal() {
-//        return new Rectangle((Casilla.getLonguitudLado() * columnaSalida) - Casilla.getLonguitudLado(),
-//                    Casilla.getLonguitudLado() * filaSalida,
-//                Casilla.getLonguitudLado(), Casilla.getLonguitudLado());
+    public static Rectangle2D getCasillaSalida() {
+        return new Rectangle2D.Float((Casilla.getLonguitudLado() * columnaSalida) - Casilla.getLonguitudLado(),
+                Casilla.getLonguitudLado() * filaSalida,
+                Casilla.getLonguitudLado(), Casilla.getLonguitudLado());
+    }
+
+//    @Override
+//    public Dimension getPreferredSize() {
+//        return new Dimension(990, 990);
 //    }
+
     @Override
-    public void paint(Graphics g) {
+    public void paintComponent(Graphics g) {
         try {
+            Graphics2D g2D = (Graphics2D) g;
+            //Pintar el un rectangulo que será el fondo del mapa, desde la posición
+            //0,0 y con dimensión ancho = num de columnas * la longuitud de una casilla
+            // y el alto = num de filas * la longuitud de una casilla
+            g2D.setColor(Color.PINK);
+            g2D.fillRect(0, 0, columnas * Casilla.getLonguitudLado(),
+                    filas * Casilla.getLonguitudLado());
             for (int i = 0; i < filas; i++) {
                 for (int j = 0; j < columnas; j++) {
-                    matriz[i][j].paint(g);
+                    matriz[i][j].paintComponent(g);
                 }
             }
-            g.setColor(Color.WHITE);
-            g.fillRect((Casilla.getLonguitudLado() * columnaSalida) - Casilla.getLonguitudLado(),
-                    Casilla.getLonguitudLado() * filaSalida,
-                    Casilla.getLonguitudLado(), Casilla.getLonguitudLado());
+            //Dibujar la casilla de salida del laberinto
+            g2D.setColor(Color.WHITE);
+//            g.fillRect((Casilla.getLonguitudLado() * columnaSalida) - Casilla.getLonguitudLado(),
+//                    Casilla.getLonguitudLado() * filaSalida,
+//                    Casilla.getLonguitudLado(), Casilla.getLonguitudLado());
+            g2D.fill(getCasillaSalida());
         } catch (Exception error) {
             System.out.println("Error dibujando mapa: " + error.toString());
             error.printStackTrace();
