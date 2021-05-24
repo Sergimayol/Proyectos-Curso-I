@@ -23,14 +23,17 @@ b=[0.014859; 0.212536; 0.114613; 0.038794; 0.254171; 0.087012; 0.065584; 0.16162
 b1=P*b;
 y=susprog(L,b1);
 x=susreg(U,y);
+  disp("Etapa 10:")
   disp(x); #Mostramos el resultado de la variable "x10" por pantalla
 
 [L,U,P]=lu(invT)
-b=[0;0;0;0;0;0;0;1;0]; #Vector b = y0
+# b=[0;0;0;0;0;0;0;1;0]; #Vector b = y0
+b= [0.058503; 0.104086; 0.048120; 0.122277; 0.184471; 0.061494; 0.133717; 0.212118; 0.075214]; #Vector b = y9
 
 b1=P*b;
 y=susprog(L,b1);
 x=susreg(U,y);
+  disp("Etapa 10:")
   disp(x); #Mostramos el resultado de la variable "y10" por pantalla
 
 #Multiplicar resultado zona 2 de x e y
