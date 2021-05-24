@@ -42,7 +42,8 @@ x=susreg(U,y);
 #Ejercicio 2:
 [L,U,P]=lu(invT)
 #Ponemos la columna 5 como el vector z0
-b=[0;2/9;0;0;1/3;2/9;0;2/9;0]
+# b=[0;2/9;0;0;1/3;2/9;0;2/9;0] Vector b = z0
+b=[0.028363;0.169456; 0.087016;0.065603;0.233292;0.080620;0.089856;0.184324;0.061493] Vector #Vector b = z9
 #Zona 3 como x0 por tanto
 b=[0;0;1;0;0;0;0;0;0]
 b1=P*b;
