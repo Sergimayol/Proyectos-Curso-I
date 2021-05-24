@@ -20,10 +20,10 @@
       - Resolución del problema
    - Apartados del proyecto
       - Matriz T y matriz T^-1 ✔️
-      - a)
-      - b)
-      - c)
-      - d)
+      - a)✔️
+      - b)✔️
+      - c)✔️
+      - d)✔️
 - Acabar proyecto estructura de computadores
    - Fase ejecución
    - Memoria
