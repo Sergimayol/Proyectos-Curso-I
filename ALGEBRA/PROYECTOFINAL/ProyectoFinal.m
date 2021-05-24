@@ -18,22 +18,20 @@ invT = inv(T)
 
 #Ejercicio 1:
 [L,U,P]=lu(invT)
-b=[0;1;0;0;0;0;0;0;0]; #Vector b = x0
+# b=[0;1;0;0;0;0;0;0;0]; Vector b = x0
+b=[0.014859; 0.212536; 0.114613; 0.038794; 0.254171; 0.087012; 0.065584; 0.161628; 0.050725]; #Vector b = x9
 b1=P*b;
 y=susprog(L,b1);
 x=susreg(U,y);
-for i=10   #Son 10 etapas, por tanto nos interesa la décima iteración
   disp(x); #Mostramos el resultado de la variable "x10" por pantalla
-endfor
 
 [L,U,P]=lu(invT)
 b=[0;0;0;0;0;0;0;1;0]; #Vector b = y0
+
 b1=P*b;
 y=susprog(L,b1);
 x=susreg(U,y);
-for i=10   #Son 10 etapas, por tanto nos interesa la décima iteración
   disp(x); #Mostramos el resultado de la variable "y10" por pantalla
-endfor
 
 #Multiplicar resultado zona 2 de x e y
 #Multiplicar resultado zona 5 de x e y
