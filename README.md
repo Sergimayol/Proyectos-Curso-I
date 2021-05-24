@@ -12,14 +12,14 @@
          - Clase Laberinto
          - Clase Casilla
       - Conclusiones
-- Acabar proyecto álgebra
-   - Memoria
-      - Introducción
-      - Discretización del problema
-      - Planteamiento del problema
-      - Resolución del problema
-   - Apartados del proyecto
-      - Matriz T y matriz T^-1 ✔️
+- Acabar proyecto álgebra ==> solo queda revisar y meterlo todo en una misma carpeta
+   - Memoria✔️
+      - Introducción✔️
+      - Discretización del problema✔️
+      - Planteamiento del problema✔️
+      - Resolución del problema✔️
+   - Apartados del proyecto✔️
+      - Matriz T y matriz T^-1✔️
       - a)✔️
       - b)✔️
       - c)✔️
