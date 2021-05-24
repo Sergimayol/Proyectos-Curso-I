@@ -40,11 +40,17 @@ x=susreg(U,y);
 #Multiplicar resultado zona 5 de x e y
 
 #Ejercicio 2:
+[L,U,P]=lu(invT)
 #Ponemos la columna 5 como el vector z0
 b=[0;2/9;0;0;1/3;2/9;0;2/9;0]
 #Zona 3 como x0 por tanto
 b=[0;0;1;0;0;0;0;0;0]
-#Finalmente multiplicamos el resultado de la zona 1 de x e y
+b1=P*b;
+y=susprog(L,b1);
+x=susreg(U,y);
+  disp("Etapa 10:")
+  disp(x); #Mostramos el resultado de la variable "z10" por pantalla
+  #Repetimos el proceso para x0 
 
 #Ejercicio 3:
 #Para responder a este apartado, tenemos que encontrar el mayor de los valores multiplicados entre x e y
