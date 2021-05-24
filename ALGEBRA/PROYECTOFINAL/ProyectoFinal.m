@@ -36,8 +36,8 @@ x=susreg(U,y);
   disp("Etapa 10:")
   disp(x); #Mostramos el resultado de la variable "y10" por pantalla
 
-#Multiplicar resultado zona 2 de x e y
-#Multiplicar resultado zona 5 de x e y
+#Multiplicar resultado zona 2 de x e y: x10*y10 = 0.212536*0.104086 = 0.021956
+#Multiplicar resultado zona 5 de x e y: x10*y10 = 0.254171*0.184471 = 0.045986
 
 #Ejercicio 2:
 [L,U,P]=lu(invT)
@@ -51,7 +51,7 @@ x=susreg(U,y);
   disp("Etapa 10:");
   disp(x); #Mostramos el resultado de la variable "z10" por pantalla
   
-  #Repetimos el proceso para x0
+ #Repetimos el proceso para x0
 [L,U,P]=lu(invT)
 #Zona 3 como x0 por tanto
 #b=[0;0;1;0;0;0;0;0;0]
@@ -62,6 +62,9 @@ y=susprog(L,b1);
 x=susreg(U,y);
   disp("Etapa 10:");
   disp(x); #Mostramos el resultado de la variable "x10" por pantalla
+
+#Multiplicamos la posición 1 del vector z10 y x10
+#x10*z10 = 0.031322*0.010455 = 3.2747e-04
 
 #Ejercicio 3:
 #Para responder a este apartado, tenemos que encontrar el mayor de los valores multiplicados entre x e y
