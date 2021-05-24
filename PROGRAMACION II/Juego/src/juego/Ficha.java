@@ -71,10 +71,11 @@ public class Ficha {
             }
         } else {
             Laberinto lab = new Laberinto();
+            lab.setVisible(false);
             lab.gameOver();
         }
     }
-
+ 
     //Método que tiene la función de devolver si se la ficha ha cochado 
     //con un rectángulo
     private boolean colision() {

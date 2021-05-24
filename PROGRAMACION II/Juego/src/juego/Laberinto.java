@@ -29,8 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * @Autores: Sergi Mayol Matos y Alejandro Rodríguez Arguimbau
- * Enlace:
+ * @Autores: Sergi Mayol Matos y Alejandro Rodríguez Arguimbau Enlace:
  */
 public class Laberinto extends JFrame {
 
@@ -42,7 +41,7 @@ public class Laberinto extends JFrame {
     private JMenuItem reiniciar;
     private JMenuItem salir;
     //Atributo Laberinto el cual contendrá el mapa y la ficha
-    Laberinto lab;
+   // Laberinto lab;
     //Atributo String que contiene el nombre del mapa que se va a dibujar
     private static String fichero;
     //Atributo Mapa que contiene mapa que se va a dibujar
@@ -54,7 +53,7 @@ public class Laberinto extends JFrame {
     public static void main(String[] args) {
         new Laberinto().inicio();
     }
-
+    
     //Mensaje al perder el juego
     public void gameOver() {
         JOptionPane.showMessageDialog(this, "        HAS GANADO!!!");

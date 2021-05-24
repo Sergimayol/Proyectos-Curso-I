@@ -29,7 +29,7 @@ public class FicheroLecturaMapas {
         }
     }
 
-// Método de lectura de linea en linea del fichero.
+// Método de lectura de una linea del fichero.
     public String lectura() {
         String linea = null;
         try {
@@ -40,7 +40,7 @@ public class FicheroLecturaMapas {
         return linea;
     }
 
-    // Método de lectura carácter a carácter del fichero. 
+    // Método de lectura un int del fichero. 
     public int leer() {
         int x = 0;
         try {
@@ -51,6 +51,7 @@ public class FicheroLecturaMapas {
         return x;
     }
 
+    //Método de cierre de enlace con fichero.
     public void close() {
         try {
             fr.close(); //Cerrar FileReader
