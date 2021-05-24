@@ -57,6 +57,8 @@ b=[0;0;1;0;0;0;0;0;0]
 #Zona 8: 0.206415*0.166036 = 0.034272
 #Zona 9: 0.072209*0.052826 = 3.8145e-03
 
+#Por tanto, la zona más probable es la zona 5, al ser la zona con el valor más alto.
+
 
 #Ejercicio 4:
 #Multiplicamos x y z para cada una de las zonas
