@@ -15,4 +15,5 @@ Sergi: estoy casi seguro de que el not es cambiar el valor de todos los bits del
 - Comprobar si subrutina DECOD está bien ✔️
 - Cambio en esta instrucción MOVE.W 6(A7),D0 --> MOVE.W 8(A7),D0 ✔️
 - Comprobar si fase de fetch está bien ✔️ (está tal cual el gianm99)
+- Subrutinas Xa y Xb correctas ✔️
 - Comprobar si fase de ejecución está bien
