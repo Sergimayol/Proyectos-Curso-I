@@ -25,9 +25,11 @@
       - c)✔️
       - d)✔️
 - Acabar proyecto estructura de computadores
+   - Fase Fetch✔️
+   - Fase decodificación✔️
    - Fase ejecución
    - Memoria
-      - Introducción ✔️
+      - Introducción✔️
       - Explicación general
       - Descripción subrutina
       - Tablas subrutinas
