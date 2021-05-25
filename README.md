@@ -7,8 +7,8 @@
       - Introducción 
       - Diseño
          - Clase mapa
-         - Clase ficha
-         - Clase lecturaMapa ✔️
+         - Clase ficha✔️
+         - Clase lecturaMapa✔️
          - Clase Laberinto
          - Clase Casilla
       - Conclusiones
