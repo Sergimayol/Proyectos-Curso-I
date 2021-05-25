@@ -12,6 +12,6 @@ Sergi: estoy casi seguro de que el not es cambiar el valor de todos los bits del
 - Revisar la subrutina K
 - Revisar la subrutina DIREC
 - Revisar si el proyecto entero funciona 
-- Comprobar si subrutina DECOD está bien
+- Comprobar si subrutina DECOD está bien ✔️
 - Comprobar si fase de fetch está bien
 - Comprobar si fase de ejecución está bien
