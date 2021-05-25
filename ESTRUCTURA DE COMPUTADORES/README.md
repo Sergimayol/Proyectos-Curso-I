@@ -13,6 +13,7 @@ Sergi: estoy casi seguro de que el not es cambiar el valor de todos los bits del
 - Subrutinas de los flags N, C y Z correctas ✔️
 - Subrutinas Ti correctas ✔️
 - Cambiar NEG o NOT, una de ellas es en complemento a 2 y la otra cambia todos los 1s por 0s y 0s por 1s
+- Modificar el JMI correctamente
 - Comprobar si están en su lugar la actualización de flags
 - Revisar la subrutina K
 - Revisar la subrutina DIREC
