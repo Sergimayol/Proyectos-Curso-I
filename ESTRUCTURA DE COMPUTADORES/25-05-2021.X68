@@ -293,6 +293,23 @@ K:
     EXT.W D0
     RTS  
     
+;Subrutina de usuario que devuelve una posicion de memoria, especificada en la 
+;einstruccion, lista para usarse en A2.
+DIREC: 
+    LSL.W #8,D0
+    LSR.W #8,D0
+    MULU.W #2,D0
+    MOVEA.W D0,A2
+    RTS
+
+;Subrutina de usuario especifica para einstrucciones de branch que devuelve
+;la direccion que hay que poner en el EPC.   
+BRDIREC:
+    LSL.W #8,D0
+    LSR.W #8,D0
+    MOVEA.W D0,A2
+    RTS
+    
 ;Subrutina que decodifica el registro del operando A y lo guarda en A4    
 Xa:
     BTST.L #7,D0
@@ -301,7 +318,7 @@ Xa:
     BEQ Xa10X
     BTST.L #5,D0
     BEQ Xa110
-    LEA.L ET7,A4 ;A es T7 ;110
+    LEA.L ET7,A4 ;A es T7 ;111
 Xa0XX:
     BTST #6,D0
     BEQ Xa00X
@@ -368,29 +385,29 @@ Xb110:
 
 ;Subrutina de usuario que actualiza el eflag N
 EFLAGN: 
-    BTST #2,D2
+    BTST #2,D2 ;Comparamos el bit 2
     BEQ N
-    BSET #2,D3
+    BSET #2,D3 ; N=1
     RTS
-N:  BCLR #2,D3
+N:  BCLR #2,D3 ; N=0    
     RTS
     
 ;Subrutina de usuario que actualiza el eflag C
 EFLAGC:
-    BTST #1,D2
+    BTST #1,D2 ;Comparamos el bit 1
     BEQ C
-    BSET #1,D3
+    BSET #1,D3 ; C=1
     RTS
-C:  BCLR #1,D3
+C:  BCLR #1,D3 ; C=0
     RTS
 
 ;Subrutina de usuario que actualiza el eflag Z
 EFLAGZ:
-    BTST #0,D2
-    BEQ Z
-    BSET #0,D3
+    BTST #0,D2 ;Comparamos el bit 0
+    BEQ Z 
+    BSET #0,D3 ; Z=1
     RTS
-Z:  BCLR #0,D3
+Z:  BCLR #0,D3 ; Z=0
     RTS
     
 ;Subrutina de usuario para conocer Ti   
@@ -416,22 +433,6 @@ LOA_Ti2:
     RTS
     ;1
     
-;Subrutina de usuario que devuelve una posicion de memoria, especificada en la 
-;einstruccion, lista para usarse en A2.
-DIREC: 
-    LSL.W #8,D0
-    LSR.W #8,D0
-    MULU.W #2,D0
-    MOVEA.W D0,A2
-    RTS
-
-;Subrutina de usuario especifica para einstrucciones de branch que devuelve
-;la direccion que hay que poner en el EPC.   
-BRDIREC:
-    LSL.W #8,D0
-    LSR.W #8,D0
-    MOVEA.W D0,A2
-    RTS
         
     ;--- FSUBR: FIN SUBRUTINAS
 
@@ -556,6 +557,7 @@ FINAL:
 *~Font size~10~
 *~Tab type~1~
 *~Tab size~4~
+
 
 
 *~Font name~Courier New~
