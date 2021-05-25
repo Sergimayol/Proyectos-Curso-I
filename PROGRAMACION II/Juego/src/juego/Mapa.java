@@ -6,10 +6,8 @@
 package juego;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 import javax.swing.JPanel;
@@ -29,20 +27,24 @@ finalmente las últimas dos lineas contienen donde se encuentra en final/salida 
  */
 public class Mapa extends JPanel {
 
-    //ATRIBUTOS QUE CONTIENEN EL NÚMERO DE FILAS Y COLUMNAS DEL MAPA
+    //ATRIBUTO QUE CONTIENE EL NÚMERO DE FILAS DEL MAPA
     private static int filas;
+    //ATRIBUTO QUE CONTIENE EL NÚMERO DE COLUMNAS DEL MAPA
     private static int columnas;
-    //ATRIBUTOS QUE CONTIENE LA POSICIÓN DE LA SALIDA DEL LABERINTO
+    //ATRIBUTO QUE CONTIENE LA FILA DE SALIDA DEL LABERINTO
     private static int filaSalida;
+    //ATRIBUTO QUE CONTIENE LA COLUMNA DE SALIDA DEL LABERINTO
     private static int columnaSalida;
     //ATRIBUTO QUE ALMACENA LOS 1's y 0's PARA GENERAR UNA CASILLA
     private int[] ladosCasilla;
     //ATRIBUTO QUE CONTIENE EL NUMERO DE FILAS Y COLUMNAS DEL MAPA
     private Casilla matriz[][];
-    //
+    //ATRIBUTO QUE CONTIENE LAS COORDENADAS X DE UNA CASILLA
     private static int randomX;
+    //ATRIBUTO QUE CONTIENE LAS COORDENADAS Y DE UNA CASILLA
     private static int randomY;
 
+    //CONSTRUCTOR
     public Mapa() {
         crearMapa(Laberinto.getFicheroNombre());
     }
@@ -75,7 +77,6 @@ public class Mapa extends JPanel {
             //Variables para determinar la posición de cada casilla a generar
             int x, y = 0;
             //Bucle para generar el mapa
-            //Mientras no se supere el 
             for (int i = 0; i < filas; i++) {
                 //Cada fila se reinicia la variable x;
                 x = 0;
@@ -101,10 +102,19 @@ public class Mapa extends JPanel {
                 //este posicionada correctamente
                 y = y + Casilla.getLonguitudLado();
             }
+            //Variable tipo random para determinar una posición aleatoria de la ficha
+            //al iniciar un mapa
             Random posicion = new Random();
+            //Variable que contendrá una fila aleatoria entre 0 y el número de filas
+            //que contenga el mapa
             int p = posicion.nextInt(filas);
+            //Se crea un nuevo random para poder determinar de forma aleatoria la
+            //columna
             posicion = new Random();
+            //Variable que contendrá una columna aleatoria entre 0 y el número de 
+            //columnas que contenga el mapa
             int q = posicion.nextInt(columnas);
+            //Asignamos a cada atributo el dato correspondiente
             randomX = matriz[p][q].getX();
             randomY = matriz[p][q].getY();
             //Leemos las dos últimas lineas que contienen la salida del laberinto
@@ -128,6 +138,7 @@ public class Mapa extends JPanel {
     public static int getColumnaSalida() {
         return columnaSalida;
     }
+
     public static int getFilas() {
         return filas;
     }
@@ -135,14 +146,18 @@ public class Mapa extends JPanel {
     public static int getColumnas() {
         return columnas;
     }
-    
-    public static int getRandomX(){
+
+    //Método que devuelve las coordenadas de X de una casilla al azar
+    public static int getRandomX() {
         return randomX;
     }
-    public static int getRandomY(){
+
+    //Método que devuelve las coordenadas de X de una casilla al azar
+    public static int getRandomY() {
         return randomY;
     }
 
+    //Método que devuelve la casilla de salida del Laberinto
     public static Rectangle2D getCasillaSalida() {
         return new Rectangle2D.Float((Casilla.getLonguitudLado() * columnaSalida) - Casilla.getLonguitudLado(),
                 Casilla.getLonguitudLado() * filaSalida,
@@ -153,7 +168,7 @@ public class Mapa extends JPanel {
 //    public Dimension getPreferredSize() {
 //        return new Dimension(990, 990);
 //    }
-
+    //Método que permite dibujar el mapa del Laberinto
     @Override
     public void paintComponent(Graphics g) {
         try {
@@ -170,7 +185,7 @@ public class Mapa extends JPanel {
                 }
             }
             //Dibujar la casilla de salida del laberinto
-            g2D.setColor(Color.WHITE);
+            g2D.setColor(Color.LIGHT_GRAY);
 //            g.fillRect((Casilla.getLonguitudLado() * columnaSalida) - Casilla.getLonguitudLado(),
 //                    Casilla.getLonguitudLado() * filaSalida,
 //                    Casilla.getLonguitudLado(), Casilla.getLonguitudLado());

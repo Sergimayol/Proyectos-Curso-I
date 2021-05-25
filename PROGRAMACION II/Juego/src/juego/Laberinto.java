@@ -41,8 +41,6 @@ public class Laberinto extends JFrame {
     private JMenuItem seleccionLab;
     private JMenuItem reiniciar;
     private JMenuItem salir;
-    //Atributo Laberinto el cual contendrá el mapa y la ficha
-    // Laberinto lab;
     //Atributo String que contiene el nombre del mapa que se va a dibujar
     private static String fichero;
     //Atributo Mapa que contiene mapa que se va a dibujar
@@ -55,7 +53,7 @@ public class Laberinto extends JFrame {
         new Laberinto().inicio();
     }
 
-    //Mensaje al llegar a la salids del mapa
+    //Mensaje al llegar a la salida del mapa
     public void gameOver() {
         JOptionPane.showMessageDialog(this, "        HAS GANADO!!!");
         //Cerrar el juego al ganar, ya que sino se quedaría en bucle
@@ -98,7 +96,7 @@ public class Laberinto extends JFrame {
         //Añadimos un titulo a la ventana
         setTitle("Laberinto");
         //La ventana no podrá redimensionarse
-        // setResizable(false);
+        setResizable(false);
         //Alamacena en la variable nuestro sistema nativo de ventanas
         Toolkit pantalla = Toolkit.getDefaultToolkit();
         //Añadimos un icono a la ventana
@@ -112,7 +110,7 @@ public class Laberinto extends JFrame {
         int anchopant = tampant.width;
         //Localización(x,y) + tamaño(ancho,alto). De esta manera siempre
         //la ventana estará situada en el centro(418,680 resizable true)
-        setBounds(anchopant / 3, altpant / 4, 418, 680); //Posible añado de +200,0 para meter estadisticas
+        setBounds(anchopant / 3, altpant / 4, 406, 668); 
         //Activar el cierre interactivo del contenedor JFrame ventana para finalizar
         //ejecución
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -8,14 +8,13 @@ package juego;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
-import java.util.Random;
 
 /**
- * @Autores: Sergi Mayol Matos y Alejandro Rodríguez Arguimbau Enlace:
+ * @Autores: Sergi Mayol Matos y Alejandro Rodríguez Arguimbau 
+ * Enlace:
  */
 public class Ficha {
 
@@ -25,7 +24,7 @@ public class Ficha {
     //ATRIBUTO QUE DEFINE EL ANCHO Y ALTO DE LA FICHA
     private final int DIAMETRO_FICHA = 25;
     //ATRIBUTO QUE DEFINE CUANTOS PIXELES SE DESPLAZA LA FICHA
-    private final int DESPLAZAMINETO_FICHA = 5;
+    private final int DESPLAZAMINETO_FICHA = 40;//Ns si poner 40 o 5
 
     //CONSTURTOR VACIO
     public Ficha() {
@@ -44,7 +43,10 @@ public class Ficha {
         g2d.drawOval(x, y, DIAMETRO_FICHA, DIAMETRO_FICHA);
     }
 
+    //Método con la funcionalidad de permitir el desplazamineto de la ficha 
+    //sobre el laberinto
     public void teclaPresionada(KeyEvent ke) {
+        //En el caso de que no sea la salida del laberinto se podra desplazar la ficha
         if (!casillaSalida()) {
             if ((ke.getKeyCode() == KeyEvent.VK_LEFT)
                     || (ke.getKeyCode() == KeyEvent.VK_A)) {
@@ -71,6 +73,7 @@ public class Ficha {
                 y = y + DESPLAZAMINETO_FICHA;
             }
         } else {
+            //En caso contrario se acaba la partida, ya que se ha ganado
             Laberinto lab = new Laberinto();
             lab.setVisible(false);
             lab.gameOver();
@@ -89,18 +92,15 @@ public class Ficha {
         return hitBoxFicha().intersects(Mapa.getCasillaSalida());
     }
 
+    //Método que indica las coordenadas de X de la ficha, a partir del párametro
+    //de la función
     public void setCoordX(int x) {
         this.x = x;
     }
 
+    //Método que indica las coordenadas de Y de la ficha, a partir del párametro
+    //de la función
     public void setCoordY(int y) {
         this.y = y;
     }
-
-//    //Devuelve un las dimensiones de la casilla de salida
-//    private Rectangle getBounds() {
-//        return new Rectangle((Casilla.getLonguitudLado() * Mapa.getColumnaSalida())
-//                - Casilla.getLonguitudLado(), Casilla.getLonguitudLado() * Mapa.getFilaSalida(),
-//                Casilla.getLonguitudLado(), Casilla.getLonguitudLado());
-//    }
 }

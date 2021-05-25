@@ -25,9 +25,9 @@ public class Casilla {
     private Rectangle2D.Float casilla;
     //ATRIBUTO PARA DETERMINAR QUE LADOS CONTIENE UNA CASILLA
     private int[] ladosCasilla;
-    //ATRIBUTO QUE CONTIENE LA LONGUITUD DEL LADO DE UNA CASILLA
+    //ATRIBUTO QUE DETERMINA LA LONGUITUD DEL LADO DE UNA CASILLA
     private final static int LONGUITUD_LADO_CASILLA = 40;
-    //
+    //ATRIBUTO QUE DTERMINA EL ANCHO DE CADA PARED DEL LABERINTO
     private final int ANCHO_MURO = 5;
 
     public Casilla(int posCasillaX, int posCasillaY, Rectangle2D.Float casilla, int[] ladosCasilla) {
@@ -77,6 +77,7 @@ public class Casilla {
         return posCasillaY;
     }
 
+    //Método que devuelve los lados que contiene una casilla
     public int[] getParedes() {
         return ladosCasilla;
     }
@@ -90,13 +91,13 @@ public class Casilla {
     public void paintComponent(Graphics g) {
         //Variable para comparar si el dato leido del fichero equivale a '1'
         Character uno = '1';
-        //Usamos la clase Graphics para dibujar la casilla
+        //Usamos la clase Graphics2D para dibujar la casilla
         Graphics2D g2D = (Graphics2D) g;
         //Asignamos el color de la casilla y lo pintamos
         //g2D.setColor(Color.CYAN);
         //g2D.fill(casilla);
         //g2D.draw(casilla);//prueba luego borrar
-        //
+        //Rectangulo2D para formar las paredes de caada casilla
         Rectangle2D.Float paredCasilla;
         //Cada casilla se compone de 4 lados Norte[0], este[1], sur[2] y oeste[3],
         //donde si en el fichero leido hay un 0 no hay lado y 1 viceversa
