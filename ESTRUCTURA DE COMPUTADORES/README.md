@@ -18,5 +18,7 @@ Sergi: estoy casi seguro de que el not es cambiar el valor de todos los bits del
 - Revisar flags con la leyenda ✔️
 - Revisar la subrutina K ✔️ 
 - Revisar la subrutina BRDIREC ✔️
+- Revisar la subrutina DIREC
+- Revisar la subrutina Ti
 - Comprobar si fase de ejecución está bien
 - Revisar si el proyecto entero funciona 
