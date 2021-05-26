@@ -9,7 +9,7 @@
          - Clase mapa
          - Clase ficha✔️
          - Clase lecturaMapa✔️
-         - Clase Laberinto(falta explicar algunos métodos)
+         - Clase Laberinto(falta metodoPrincipal, pendiente por posibles cambios en él)✔️
          - Clase Casilla
       - Conclusiones
 - Acabar proyecto álgebra ==> solo queda revisar y meterlo todo en una misma carpeta
