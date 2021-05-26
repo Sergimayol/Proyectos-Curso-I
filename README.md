@@ -31,7 +31,7 @@
    - Memoria
       - Introducción✔️
       - Explicación general
-      - Descripción subrutina
+      - Descripción subrutina(falta explicación de la subru)
       - Tablas subrutinas
       - Tabla registros
       - Tabla variables
