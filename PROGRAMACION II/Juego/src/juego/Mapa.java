@@ -84,7 +84,7 @@ public class Mapa extends JPanel {
                     //Creamos un rectangulo de fondo, en el cual dibujaremos sobre él 
                     //los lados de cada casilla
                     Rectangle2D.Float fondoCasilla = new Rectangle2D.Float(x, y,
-                            Casilla.getLonguitudLado(), Casilla.getLonguitudLado());
+                            Casilla.getLongitudLado(), Casilla.getLongitudLado());
                     ladosCasilla = new int[4];
                     //Bucle para generar los lados de cada casilla
                     for (int k = 0; k < 4; k++) {
@@ -94,13 +94,13 @@ public class Mapa extends JPanel {
                     matriz[i][j] = new Casilla(x, y, fondoCasilla, ladosCasilla);
                     //Aumentamos las coordenadas de x, para que la siguiente casilla
                     //este posicionada correctamente
-                    x = x + Casilla.getLonguitudLado();
+                    x = x + Casilla.getLongitudLado();
                 }
                 //Avanzar linea de lectura
                 lecturaDatos.lectura();
                 //Aumentamos las coordenadas de y, para que la siguiente casilla
                 //este posicionada correctamente
-                y = y + Casilla.getLonguitudLado();
+                y = y + Casilla.getLongitudLado();
             }
             //Variable tipo random para determinar una posición aleatoria de la ficha
             //al iniciar un mapa
@@ -159,9 +159,9 @@ public class Mapa extends JPanel {
 
     //Método que devuelve la casilla de salida del Laberinto
     public static Rectangle2D getCasillaSalida() {
-        return new Rectangle2D.Float((Casilla.getLonguitudLado() * columnaSalida) - Casilla.getLonguitudLado(),
-                Casilla.getLonguitudLado() * filaSalida,
-                Casilla.getLonguitudLado(), Casilla.getLonguitudLado());
+        return new Rectangle2D.Float((Casilla.getLongitudLado() * columnaSalida) - Casilla.getLongitudLado(),
+                Casilla.getLongitudLado() * filaSalida,
+                Casilla.getLongitudLado(), Casilla.getLongitudLado());
     }
 
 //    @Override
@@ -177,8 +177,8 @@ public class Mapa extends JPanel {
             //0,0 y con dimensión ancho = num de columnas * la longuitud de una casilla
             // y el alto = num de filas * la longuitud de una casilla
             g2D.setColor(Color.PINK);
-            g2D.fillRect(0, 0, columnas * Casilla.getLonguitudLado(),
-                    filas * Casilla.getLonguitudLado());
+            g2D.fillRect(0, 0, columnas * Casilla.getLongitudLado(),
+                    filas * Casilla.getLongitudLado());
             for (int i = 0; i < filas; i++) {
                 for (int j = 0; j < columnas; j++) {
                     matriz[i][j].paintComponent(g);

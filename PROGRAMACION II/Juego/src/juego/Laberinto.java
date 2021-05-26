@@ -43,10 +43,11 @@ public class Laberinto extends JFrame {
     private JMenuItem salir;
     //Atributo String que contiene el nombre del mapa que se va a dibujar
     private static String fichero;
-    //Atributo Mapa que contiene mapa que se va a dibujar
+    //Atributo AreaDibujoLaberinto que contiene el mapa y la ficha a dibujar
     private AreaDibujoLaberinto dibujo;
-    //
+    //Atributo Ficha que contiene ficha que se va a dibujar
     private Ficha ficha = new Ficha();
+    //Atributo Mapa que contiene mapa que se va a dibujar
     private Mapa mapa = new Mapa();
 
     public static void main(String[] args) {
@@ -56,7 +57,7 @@ public class Laberinto extends JFrame {
     //Mensaje al llegar a la salida del mapa
     public void gameOver() {
         JOptionPane.showMessageDialog(this, "        HAS GANADO!!!");
-        //Cerrar el juego al ganar, ya que sino se quedaría en bucle
+        //Cerrar el juego al ganar
         System.exit(0);
     }
 
@@ -72,8 +73,8 @@ public class Laberinto extends JFrame {
         }
     }
 
-    //Constructor el cual contiene las configuraciones del JFrame 
-    //y el metodo principal, además de tener el foco principal para el movimiento
+    //Constructor el cual contiene las configuraciones del JFrame y el método  
+    //principal, además de tener el foco principal para el movimiento
     //de la ficha
     public Laberinto() {
         addKeyListener(new KeyListener() {
@@ -134,8 +135,8 @@ public class Laberinto extends JFrame {
         return fichero;
     }
 
-    //Este método es el encargado de la gestion de botones y de la adicion 
-    //del mapa al JFrame
+    //Este método es el encargado de la gestion de acciones de los botones del 
+    //menuBar y de la configuración y adición del mapa y la ficha al JFrame
     private void metodoPrincipal() {
         //MANIPULADOR EVENTOS COMPONENTES JMenu 
         ActionListener gestorEventosMapa = new ActionListener() {
@@ -227,7 +228,8 @@ public class Laberinto extends JFrame {
         }
     }
 
-    //Método encargado de posicionar en una casilla aleatoria del laberinto la ficha
+    //Método encargado de posicionar la ficha en una casilla
+    //aleatoria del laberinto 
     private void posicionRandomFichaInicio() {
         ficha.setCoordX(Mapa.getRandomX()+7);
         ficha.setCoordY(Mapa.getRandomY()+7);
@@ -236,10 +238,7 @@ public class Laberinto extends JFrame {
     //Clase encargada de dibujar el mapa y la ficha 
     public class AreaDibujoLaberinto extends JPanel {
 
-        //private Mapa mapa;
         public AreaDibujoLaberinto() {
-            //mapa = new Mapa();
-            //ficha = new Ficha();
             posicionRandomFichaInicio();
         }
 

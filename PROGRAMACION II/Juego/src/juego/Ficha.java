@@ -13,28 +13,30 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 
 /**
- * @Autores: Sergi Mayol Matos y Alejandro Rodríguez Arguimbau 
- * Enlace:
+ * @Autores: Sergi Mayol Matos y Alejandro Rodríguez Arguimbau Enlace:
  */
 public class Ficha {
 
-    //ATRIBUTOS QUE DEFINEN LA POSICIÓN DE LA FICHA
-    private int x = 5;
-    private int y = 5;
+    //ATRIBUTO QUE DEFINE LA POSICIÓN X DE LA FICHA
+    private int x;
+    //ATRIBUTO QUE DEFINE LA POSICIÓN Y DE LA FICHA
+    private int y;
     //ATRIBUTO QUE DEFINE EL ANCHO Y ALTO DE LA FICHA
     private final int DIAMETRO_FICHA = 25;
     //ATRIBUTO QUE DEFINE CUANTOS PIXELES SE DESPLAZA LA FICHA
-    private final int DESPLAZAMINETO_FICHA = 40;//Ns si poner 40 o 5
+    private final int DESPLAZAMINETO_FICHA = 40;
 
-    //CONSTURTOR VACIO
+    //CONSTURTOR 
     public Ficha() {
 
     }
 
+    //Método que permite dibujar la ficha sobre el mapa
     public void paintComponent(Graphics g) {
         //Utilizamos Graphics2D para la visualización
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
         //FICHA
         g2d.setColor(Color.RED);
         g2d.fillOval(x, y, DIAMETRO_FICHA, DIAMETRO_FICHA);
@@ -80,26 +82,26 @@ public class Ficha {
         }
     }
 
-    //Método que devuelve un rectángulo del tamaño de la ficha para comprobrar
+    //Método que devuelve un rectángulo del tamaño de la ficha para comprobar
     //si colisiona con otro rectángulo
     private Rectangle2D hitBoxFicha() {
         return new Rectangle2D.Float(x, y, DIAMETRO_FICHA, DIAMETRO_FICHA);
     }
 
-    //Método que tiene la función de devolver si se la ficha ha cochado 
-    //con un rectángulo
+    //Método que tiene la función de devolver si la ficha ha interseccionado
+    //con la casilla de salida
     private boolean casillaSalida() {
         return hitBoxFicha().intersects(Mapa.getCasillaSalida());
     }
 
-    //Método que indica las coordenadas de X de la ficha, a partir del párametro
-    //de la función
+    //Método que indica las coordenadas de X de la ficha, a partir del parámetro
+    //del método
     public void setCoordX(int x) {
         this.x = x;
     }
 
-    //Método que indica las coordenadas de Y de la ficha, a partir del párametro
-    //de la función
+    //Método que indica las coordenadas de Y de la ficha, a partir del parámetro
+    //del método
     public void setCoordY(int y) {
         this.y = y;
     }

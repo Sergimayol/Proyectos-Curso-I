@@ -11,8 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 /**
- * @Autores: Sergi Mayol Matos y Alejandro Rodríguez Arguimbau
- * Enlace:
+ * @Autores: Sergi Mayol Matos y Alejandro Rodríguez Arguimbau Enlace:
  */
 public class Casilla {
 
@@ -25,8 +24,8 @@ public class Casilla {
     private Rectangle2D.Float casilla;
     //ATRIBUTO PARA DETERMINAR QUE LADOS CONTIENE UNA CASILLA
     private int[] ladosCasilla;
-    //ATRIBUTO QUE DETERMINA LA LONGUITUD DEL LADO DE UNA CASILLA
-    private final static int LONGUITUD_LADO_CASILLA = 40;
+    //ATRIBUTO QUE DETERMINA LA LONGITUD DEL LADO DE UNA CASILLA
+    private final static int LONGITUD_LADO_CASILLA = 40;
     //ATRIBUTO QUE DTERMINA EL ANCHO DE CADA PARED DEL LABERINTO
     private final int ANCHO_MURO = 5;
 
@@ -83,8 +82,8 @@ public class Casilla {
     }
 
     //Devuelve la longuitud que tiene una casilla
-    public static int getLonguitudLado() {
-        return LONGUITUD_LADO_CASILLA;
+    public static int getLongitudLado() {
+        return LONGITUD_LADO_CASILLA;
     }
 
     //MÉTODO PARA DIBUJAR LAS CASILLA CORRESPONDIENTE AL .TXT LEIDO
@@ -104,30 +103,30 @@ public class Casilla {
         if (ladosCasilla[0] == uno) { //Norte = [0]
             //Norte = (x,y,ladoCasilla,5)
             paredCasilla = new Rectangle2D.Float(posCasillaX,
-                    posCasillaY, LONGUITUD_LADO_CASILLA, ANCHO_MURO);
+                    posCasillaY, LONGITUD_LADO_CASILLA, ANCHO_MURO);
             g2D.setColor(Color.BLACK);
             g2D.fill(paredCasilla);
         }
         if (ladosCasilla[1] == uno) { //Este = [1]
             //Este = (x+ladoCasilla,y,5,ladoCasilla)
             paredCasilla = new Rectangle2D.Float(posCasillaX
-                    + LONGUITUD_LADO_CASILLA - ANCHO_MURO, posCasillaY,
-                    ANCHO_MURO, LONGUITUD_LADO_CASILLA);
+                    + LONGITUD_LADO_CASILLA - ANCHO_MURO, posCasillaY,
+                    ANCHO_MURO, LONGITUD_LADO_CASILLA);
             g2D.setColor(Color.BLACK);
             g2D.fill(paredCasilla);
         }
         if (ladosCasilla[2] == uno) { //Sur = [2]
             //Sur = (x,y+ladoCasilla,ladoCasilla,5)
             paredCasilla = new Rectangle2D.Float(posCasillaX,
-                    posCasillaY + LONGUITUD_LADO_CASILLA - ANCHO_MURO,
-                    LONGUITUD_LADO_CASILLA, ANCHO_MURO);
+                    posCasillaY + LONGITUD_LADO_CASILLA - ANCHO_MURO,
+                    LONGITUD_LADO_CASILLA, ANCHO_MURO);
             g2D.setColor(Color.BLACK);
             g2D.fill(paredCasilla);
         }
         if (ladosCasilla[3] == uno) { //Oeste = [3]
             //Oeste = (x,y,5,ladoCasilla)
             paredCasilla = new Rectangle2D.Float(posCasillaX,
-                    posCasillaY, ANCHO_MURO, LONGUITUD_LADO_CASILLA);
+                    posCasillaY, ANCHO_MURO, LONGITUD_LADO_CASILLA);
             g2D.setColor(Color.BLACK);
             g2D.fill(paredCasilla);
         }
