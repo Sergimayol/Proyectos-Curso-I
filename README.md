@@ -10,7 +10,7 @@
          - Clase ficha✔️
          - Clase lecturaMapa✔️
          - Clase Laberinto(falta metodoPrincipal, pendiente por posibles cambios en él)✔️
-         - Clase Casilla
+         - Clase Casilla (falta explicar los métodos)
       - Conclusiones
 - Acabar proyecto álgebra ==> solo queda revisar y meterlo todo en una misma carpeta
    - Memoria✔️
