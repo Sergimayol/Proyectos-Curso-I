@@ -23,8 +23,6 @@ public class Ficha {
     private int y;
     //ATRIBUTO QUE DEFINE EL ANCHO Y ALTO DE LA FICHA
     private final int DIAMETRO_FICHA = 25;
-    //ATRIBUTO QUE DEFINE CUANTOS PIXELES SE DESPLAZA LA FICHA
-    private final int DESPLAZAMINETO_FICHA = 40;
 
     //CONSTURTOR 
     public Ficha() {
@@ -43,55 +41,6 @@ public class Ficha {
         //CONTORNO FICHA
         g2d.setColor(Color.BLACK);
         g2d.drawOval(x, y, DIAMETRO_FICHA, DIAMETRO_FICHA);
-    }
-
-    //Método con la funcionalidad de permitir el desplazamineto de la ficha 
-    //sobre el laberinto
-    public void teclaPresionada(KeyEvent ke) {
-        //En el caso de que no sea la salida del laberinto se podra desplazar la ficha
-        if (!casillaSalida()) {
-            if ((ke.getKeyCode() == KeyEvent.VK_LEFT)
-                    || (ke.getKeyCode() == KeyEvent.VK_A)) {
-                // System.out.println("IZQUIERDA");
-                //Mover ficha izquierda(-X)
-                x = x - DESPLAZAMINETO_FICHA;
-            }
-            if ((ke.getKeyCode() == KeyEvent.VK_RIGHT)
-                    || (ke.getKeyCode() == KeyEvent.VK_D)) {
-                //System.out.println("DERECHA");
-                //Mover ficha derecha(+X)
-                x = x + DESPLAZAMINETO_FICHA;
-            }
-            if ((ke.getKeyCode() == KeyEvent.VK_UP)
-                    || (ke.getKeyCode() == KeyEvent.VK_W)) {
-                //System.out.println("ARRIBA");
-                //Mover ficha arriba(+Y)
-                y = y - DESPLAZAMINETO_FICHA;
-            }
-            if ((ke.getKeyCode() == KeyEvent.VK_DOWN)
-                    || (ke.getKeyCode() == KeyEvent.VK_S)) {
-                //System.out.println("ABAJO");
-                //Mover ficha abajo(-Y)
-                y = y + DESPLAZAMINETO_FICHA;
-            }
-        } else {
-            //En caso contrario se acaba la partida, ya que se ha ganado
-            Laberinto lab = new Laberinto();
-            lab.setVisible(false);
-            lab.gameOver();
-        }
-    }
-
-    //Método que devuelve un rectángulo del tamaño de la ficha para comprobar
-    //si colisiona con otro rectángulo
-    private Rectangle2D hitBoxFicha() {
-        return new Rectangle2D.Float(x, y, DIAMETRO_FICHA, DIAMETRO_FICHA);
-    }
-
-    //Método que tiene la función de devolver si la ficha ha interseccionado
-    //con la casilla de salida
-    private boolean casillaSalida() {
-        return hitBoxFicha().intersects(Mapa.getCasillaSalida());
     }
 
     //Método que indica las coordenadas de X de la ficha, a partir del parámetro

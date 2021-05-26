@@ -60,17 +60,12 @@ public class Mapa extends JPanel {
             //DECLARACIÓN E INTANCIACIÓN de la clase FicheroLecturaMapas, para leer del
             //fichero los datos, para generar el mapa
             FicheroLecturaMapas lecturaDatos = new FicheroLecturaMapas(nombreMapa);
-            String linea;
             //Leemos la primera linea del fichero de la cual obtenemos el número 
-            //de filas que contiene el mapa
-            linea = lecturaDatos.lectura();
-            //Pasamos su valor a numérico
-            filas = Integer.parseInt(linea);
+            //de filas que contiene el mapa y pasamos su valor a numérico
+            filas = Integer.parseInt(lecturaDatos.lectura());
             //Leemos la siguiente linea del fichero la cual contiene el nu´número 
-            //de columnas que contiene el mapa
-            linea = lecturaDatos.lectura();
-            //Pasamos su valor a numérico
-            columnas = Integer.parseInt(linea);
+            //de columnas que contiene el mapa y pasamos su valor a numérico
+            columnas = Integer.parseInt(lecturaDatos.lectura());
             //A partor de los datos obtenidos anteriormenete ya sabemos las 
             //dimensiones del mapa a generar
             matriz = new Casilla[filas][columnas];
@@ -88,8 +83,7 @@ public class Mapa extends JPanel {
                     ladosCasilla = new int[4];
                     //Bucle para generar los lados de cada casilla
                     for (int k = 0; k < 4; k++) {
-                        int lectura = lecturaDatos.leer();
-                        ladosCasilla[k] = lectura;
+                        ladosCasilla[k] = lecturaDatos.leer();;
                     }
                     matriz[i][j] = new Casilla(x, y, fondoCasilla, ladosCasilla);
                     //Aumentamos las coordenadas de x, para que la siguiente casilla
@@ -102,42 +96,30 @@ public class Mapa extends JPanel {
                 //este posicionada correctamente
                 y = y + Casilla.getLongitudLado();
             }
-            //Variable tipo random para determinar una posición aleatoria de la ficha
-            //al iniciar un mapa
-            Random posicion = new Random();
-            //Variable que contendrá una fila aleatoria entre 0 y el número de filas
-            //que contenga el mapa
-            int p = posicion.nextInt(filas);
-            //Se crea un nuevo random para poder determinar de forma aleatoria la
-            //columna
-            posicion = new Random();
-            //Variable que contendrá una columna aleatoria entre 0 y el número de 
-            //columnas que contenga el mapa
-            int q = posicion.nextInt(columnas);
-            //Asignamos a cada atributo el dato correspondiente
-            randomX = matriz[p][q].getX();
-            randomY = matriz[p][q].getY();
             //Leemos las dos últimas lineas que contienen la salida del laberinto
-            linea = lecturaDatos.lectura();
-            filaSalida = Integer.parseInt(linea);
-            linea = lecturaDatos.lectura();
-            columnaSalida = Integer.parseInt(linea);
+            filaSalida = Integer.parseInt(lecturaDatos.lectura());
+            columnaSalida = Integer.parseInt(lecturaDatos.lectura());
             //Cierre enlace con el fichero
             lecturaDatos.close();
+            //Aginación de la casilla de salida
+            setPosAleatoriaFicha();
+            setCasillaSalida();
         } catch (NumberFormatException error) {
             System.out.println("Error: " + error.toString());
+            error.printStackTrace();
         } catch (Exception error) {
             System.out.println("Error: " + error.toString());
+            error.printStackTrace();
         }
     }
 
-    public static int getFilaSalida() {
-        return filaSalida;
-    }
+//    public static int getFilaSalida() {
+//        return filaSalida;
+//    }
 
-    public static int getColumnaSalida() {
-        return columnaSalida;
-    }
+//    public static int getColumnaSalida() {
+//        return columnaSalida;
+//    }
 
     public static int getFilas() {
         return filas;
@@ -147,14 +129,47 @@ public class Mapa extends JPanel {
         return columnas;
     }
 
-    //Método que devuelve las coordenadas de X de una casilla al azar
-    public static int getRandomX() {
-        return randomX;
+//    //Método que devuelve las coordenadas de X de una casilla al azar
+//    public static int getRandomX() {
+//        return randomX;
+//    }
+
+//    //Método que devuelve las coordenadas de X de una casilla al azar
+//    public static int getRandomY() {
+//        return randomY;
+//    }
+
+//    //Método
+//    public int[] paredes(int i, int j) {
+//        return matriz[i][j].getParedes();
+//    }
+    
+    //
+    public Casilla getMatriz(int i, int j){
+        return matriz[i][j];
     }
 
-    //Método que devuelve las coordenadas de X de una casilla al azar
-    public static int getRandomY() {
-        return randomY;
+    //
+    private void setPosAleatoriaFicha() {
+        //Variable tipo random para determinar una posición aleatoria de la ficha
+        //al iniciar un mapa
+        Random posicion = new Random();
+        //Variable que contendrá una fila aleatoria entre 0 y el número de filas
+        //que contenga el mapa
+        int p = posicion.nextInt(filas);
+        //Se crea un nuevo random para poder determinar de forma aleatoria la
+        //columna
+        posicion = new Random();
+        //Variable que contendrá una columna aleatoria entre 0 y el número de 
+        //columnas que contenga el mapa
+        int q = posicion.nextInt(columnas);
+        //
+        matriz[p][q].setCasillaOcupada();
+    }
+
+    //
+    private void setCasillaSalida() {
+        matriz[filaSalida][columnaSalida - 1].setcasillaSalida();
     }
 
     //Método que devuelve la casilla de salida del Laberinto
@@ -164,10 +179,6 @@ public class Mapa extends JPanel {
                 Casilla.getLongitudLado(), Casilla.getLongitudLado());
     }
 
-//    @Override
-//    public Dimension getPreferredSize() {
-//        return new Dimension(990, 990);
-//    }
     //Método que permite dibujar el mapa del Laberinto
     @Override
     public void paintComponent(Graphics g) {
@@ -179,17 +190,15 @@ public class Mapa extends JPanel {
             g2D.setColor(Color.PINK);
             g2D.fillRect(0, 0, columnas * Casilla.getLongitudLado(),
                     filas * Casilla.getLongitudLado());
-            for (int i = 0; i < filas; i++) {
-                for (int j = 0; j < columnas; j++) {
-                    matriz[i][j].paintComponent(g);
-                }
-            }
             //Dibujar la casilla de salida del laberinto
             g2D.setColor(Color.LIGHT_GRAY);
-//            g.fillRect((Casilla.getLonguitudLado() * columnaSalida) - Casilla.getLonguitudLado(),
-//                    Casilla.getLonguitudLado() * filaSalida,
-//                    Casilla.getLonguitudLado(), Casilla.getLonguitudLado());
             g2D.fill(getCasillaSalida());
+            //Bucle para pintar el laberinto
+            for (int i = 0; i < filas; i++) {
+                for (int j = 0; j < columnas; j++) {
+                    matriz[i][j].paintComponent(g2D);
+                }
+            }
         } catch (Exception error) {
             System.out.println("Error dibujando mapa: " + error.toString());
             error.printStackTrace();

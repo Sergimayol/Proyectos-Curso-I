@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * @Autores: Sergi Mayol Matos y Alejandro Rodríguez Arguimbau Enlace:
@@ -16,7 +18,9 @@ import java.awt.geom.Rectangle2D;
 public class Casilla {
 
     //ATRIBUTO QUE PERMITE SABER SI UNA CASILLA ESTA OCUPADA O NO
-    private boolean ocupada = false;
+    private boolean ocupada;
+    //ARTIBUTO
+    private boolean casillaSalida;
     //ATRIBUTOS QUE DETERMINAN LA POSICIÓN DE LA CASILLA(EJES (X,Y))
     private int posCasillaX;
     private int posCasillaY;
@@ -32,8 +36,10 @@ public class Casilla {
     public Casilla(int posCasillaX, int posCasillaY, Rectangle2D.Float casilla, int[] ladosCasilla) {
         this.posCasillaX = posCasillaX;
         this.posCasillaY = posCasillaY;
-        this.casilla = casilla;
+        this.casilla = casilla; //Sobra, no hace falta
         this.ladosCasilla = ladosCasilla;
+        casillaSalida = false;
+        ocupada = false;
     }
 
     //MÉTODO QUE DEVUELVE EL ESTADO DE UNA CASILLA
@@ -77,6 +83,11 @@ public class Casilla {
     }
 
     //Método que devuelve los lados que contiene una casilla
+    public int getParedes(int i) {
+        return ladosCasilla[i];
+    }
+
+    //Método que devuelve los lados que contiene una casilla
     public int[] getParedes() {
         return ladosCasilla;
     }
@@ -86,16 +97,33 @@ public class Casilla {
         return LONGITUD_LADO_CASILLA;
     }
 
+    //
+    public void setcasillaSalida() {
+        casillaSalida = true;
+    }
+
+    //Mensaje al llegar a la salida del mapa
+    public void gameOver() {
+        JOptionPane.showMessageDialog(null, "        HAS GANADO!!!");
+        //Cerrar el juego al ganar
+        System.exit(0);
+    }
+
     //MÉTODO PARA DIBUJAR LAS CASILLA CORRESPONDIENTE AL .TXT LEIDO
     public void paintComponent(Graphics g) {
         //Variable para comparar si el dato leido del fichero equivale a '1'
         Character uno = '1';
         //Usamos la clase Graphics2D para dibujar la casilla
         Graphics2D g2D = (Graphics2D) g;
-        //Asignamos el color de la casilla y lo pintamos
-        //g2D.setColor(Color.CYAN);
-        //g2D.fill(casilla);
-        //g2D.draw(casilla);//prueba luego borrar
+        Ficha ficha = new Ficha();
+        if (ocupada) {
+            ficha.setCoordX(posCasillaX + 7);
+            ficha.setCoordY(posCasillaY + 7);
+            ficha.paintComponent(g2D);
+            if (casillaSalida) {
+                gameOver();
+            }
+        }
         //Rectangulo2D para formar las paredes de caada casilla
         Rectangle2D.Float paredCasilla;
         //Cada casilla se compone de 4 lados Norte[0], este[1], sur[2] y oeste[3],
