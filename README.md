@@ -38,7 +38,7 @@
       - JMP ENEG✔️
       - JMP EAND✔️
       - JMP EOR✔️
-      - JMP ENOT
+      - JMP ENOT✔️
       - JMP ESET
       - JMP EMOV
       - JMP ESTO
