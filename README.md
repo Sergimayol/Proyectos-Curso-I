@@ -4,7 +4,7 @@
       - Muros laberinto✔️
       - Posicionar la ficha en un lugar random✔️
    - Memoria
-      - Introducción 
+      - Introducción✔️ 
       - Diseño
          - Clase mapa
          - Clase ficha✔️
