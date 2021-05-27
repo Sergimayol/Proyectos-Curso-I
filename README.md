@@ -41,7 +41,7 @@
       - JMP ENOT✔️
       - JMP ESET✔️
       - JMP EMOV✔️
-      - JMP ESTO
+      - JMP ESTO✔️
       - JMP ELOA
    - Memoria
       - Introducción✔️
