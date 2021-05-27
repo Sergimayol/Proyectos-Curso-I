@@ -36,8 +36,8 @@
       - JMP EADD✔️
       - JMP ESUB✔️
       - JMP ENEG✔️
-      - JMP EAND
-      - JMP EOR
+      - JMP EAND✔️
+      - JMP EOR✔️
       - JMP ENOT
       - JMP ESET
       - JMP EMOV
