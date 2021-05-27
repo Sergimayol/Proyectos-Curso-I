@@ -27,7 +27,7 @@
 - Acabar proyecto estructura de computadores
    - Fase Fetch✔️
    - Fase decodificación✔️
-   - Fase ejecución
+   - Fase ejecución✔️
       - JMP EHLT✔️
       - JMP EJMN✔️
       - JMP EJMZ✔️
