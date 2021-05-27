@@ -28,6 +28,21 @@
    - Fase Fetch✔️
    - Fase decodificación✔️
    - Fase ejecución
+      - JMP EHLT✔️
+      - JMP EJMN✔️
+      - JMP EJMZ✔️
+      - JMP EJMI✔️
+      - JMP ECOM
+      - JMP EADD
+      - JMP ESUB
+      - JMP ENEG
+      - JMP EAND
+      - JMP EOR
+      - JMP ENOT
+      - JMP ESET
+      - JMP EMOV
+      - JMP ESTO
+      - JMP ELOA
    - Memoria
       - Introducción✔️
       - Explicación general
