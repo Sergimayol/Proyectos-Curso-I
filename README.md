@@ -32,9 +32,9 @@
       - JMP EJMN✔️
       - JMP EJMZ✔️
       - JMP EJMI✔️
-      - JMP ECOM
-      - JMP EADD
-      - JMP ESUB
+      - JMP ECOM✔️
+      - JMP EADD✔️
+      - JMP ESUB✔️
       - JMP ENEG
       - JMP EAND
       - JMP EOR
