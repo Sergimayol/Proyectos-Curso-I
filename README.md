@@ -42,7 +42,7 @@
       - JMP ESET✔️
       - JMP EMOV✔️
       - JMP ESTO✔️
-      - JMP ELOA
+      - JMP ELOA✔️
    - Memoria
       - Introducción✔️
       - Explicación general
