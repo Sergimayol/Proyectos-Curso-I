@@ -39,8 +39,8 @@
       - JMP EAND✔️
       - JMP EOR✔️
       - JMP ENOT✔️
-      - JMP ESET
-      - JMP EMOV
+      - JMP ESET✔️
+      - JMP EMOV✔️
       - JMP ESTO
       - JMP ELOA
    - Memoria
