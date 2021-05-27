@@ -1,6 +1,6 @@
 # Repositorio para proyectos
 - Acabar proyecto programación
-   - Programa
+   - Programa✔️
       - Muros laberinto✔️
       - Posicionar la ficha en un lugar random✔️
    - Memoria
