@@ -55,8 +55,8 @@ FETCH:
 	MOVE.W #0,-(A7)     ; Reservar espacio en la pila para el resultado
     MOVE.W EIR,-(A7)    ; Paso de parametro EIR a la pila
     JSR DECOD           ; Salto a la subrutina
-    ADDQ.W #2,A7        ; vaciar pila
-    MOVE.W (A7)+,D1     ; Guardar resultado en D1
+    ADDQ.W #2,SP        ; vaciar pila
+    MOVE.W (SP)+,D1     ; Guardar resultado en D1
         
     ;--- FBRDECOD: FIN SALTO A DECOD
     
@@ -149,7 +149,7 @@ EADD:
     JSR EFLAGC     ;Actualización eflag C
     JSR EFLAGZ     ;Actualización eflag Z
     MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
-    MOVE.W D5,(A4)
+    MOVE.W D5,(A3)
     JMP FETCH
     
 ;RESTA EL CONTENIDO DE B y EL CONTENIDO DE A Y LO GUARDA EN B
@@ -169,7 +169,7 @@ ESUB:
     JSR EFLAGC     ;Actualización eflag C
     JSR EFLAGZ     ;Actualización eflag Z
     MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
-    MOVE.W D5,(A4)
+    MOVE.W D5,(A3)
     JMP FETCH
 
 ;CAMBIA EL SIGNO DEL CONTENIDO DE B Y LO GUARDA EN B
@@ -185,7 +185,7 @@ ENEG:
     JSR EFLAGN     ;Actualización eflag N
     JSR EFLAGZ     ;Actualización eflag Z
     MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
-    MOVE.W D5,(A4)
+    MOVE.W D5,(A3)
     JMP FETCH
 
 ;REALIZACIÓN DE UNA AND BIT A BIT DEL CONTENIDO DE B CON EL DE A 
@@ -195,14 +195,14 @@ EAND:
     JSR Xa
     MOVE.W (A3),D5
     MOVE.W (A4),D6
-    AND.W D6,D5
+    AND.W D5,D6
     ;ACTUALIZACIÓN DE LOS EFLAGS
     MOVE.W SR,D2   ;Guardamos el SR en un registro intermendio para operar
     MOVE.W ESR,D3  ;Guardamos el ESR en un registro intermendio para operar
     JSR EFLAGN     ;Actualización eflag N
     JSR EFLAGZ     ;Actualización eflag Z
     MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
-    MOVE.W D5,(A4)
+    MOVE.W D6,(A3)
     JMP FETCH
 
 ;REALIZACIÓN DE UNA OR BIT A BIT DEL CONTENIDO DE B CON EL DE A    
@@ -212,14 +212,14 @@ EOR:
     JSR Xa
     MOVE.W (A3),D5
     MOVE.W (A4),D6
-    OR.W D6,D5
+    OR.W D5,D6
     ;ACTUALIZACIÓN DE LOS EFLAGS
     MOVE.W SR,D2   ;Guardamos el SR en un registro intermendio para operar
     MOVE.W ESR,D3  ;Guardamos el ESR en un registro intermendio para operar
     JSR EFLAGN     ;Actualización eflag N
     JSR EFLAGZ     ;Actualización eflag Z
     MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
-    MOVE.W D5,(A4)
+    MOVE.W D6,(A3)
     JMP FETCH
 
 ;CAMBIA CADA BIT HACIENDO UN NOT DEL CONTENIDO DE B
@@ -234,7 +234,7 @@ ENOT:
     JSR EFLAGN     ;Actualización eflag N
     JSR EFLAGZ     ;Actualización eflag Z
     MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
-    MOVE.W D5,(A4)
+    MOVE.W D5,(A3)
     JMP FETCH
 
 ESET:
@@ -249,7 +249,6 @@ ESET:
     JSR EFLAGN     ;Actualización eflag N
     JSR EFLAGZ     ;Actualización eflag Z
     MOVE.W D3,ESR  ;Guardamos los eflags actualizados en su registro correspondiente
-    MOVE.W D5,(A4)
     JMP FETCH
 
 ;COPIA EL CONTENIDO DE A en B
@@ -269,22 +268,22 @@ EMOV:
 ;MUEVE EL CONTENIDO DE Ti AL OPERANDO DESTINO(M)
 ESTO:
 	JSR GET_I
-	MOVE.W EIR, D2
-	AND.W #$00FF, D2
-	MOVE.W D2,A3
-	ADD.W A3,A3
-	MOVE.W (A4),EPROG(A3)
-	BRA FETCH
+	MOVE.W EIR, D0
+	AND.W #$00FF, D0
+	MOVE.W D0,A5
+	ADD.W A5,A5
+	MOVE.W (A4),EPROG(A5)
+	JMP FETCH
 ;Probablemente haya que modificar los bucles de este método 
 
 ;MUEVE EL CONTENIDO DE M AL OPERANDO DESTINO(Ti)
 ELOA:
 	JSR GET_I 
-	MOVE.W EIR, D2
-	AND.W #$00FF, D2 ;Sacar M 
-	MOVE.W D2,A3
-	ADD.W A3,A3
-	MOVE.W EPROG(A3),(A4)
+	MOVE.W EIR, D0
+	AND.W #$00FF, D0 ;Sacar M 
+	MOVE.W D0,A5
+	ADD.W A5,A5
+	MOVE.W EPROG(A5),(A4)
     ;ACTUALIZACIÓN DE LOS EFLAGS
     MOVE.W SR,D2   ;Guardamos el SR en un registro intermendio para operar
     MOVE.W ESR,D3  ;Guardamos el ESR en un registro intermendio para operar
@@ -301,7 +300,6 @@ ELOA:
 
 ;Subrutina de usuario para conocer Ti      
 GET_I: ;Pone en el registro A4 la dirección de T1 o T0
-
 	BTST #3,EIR ;Mirar si es T1 o T0
 	BEQ RT0
 RT1:	
@@ -447,43 +445,43 @@ Z:  BCLR #0,D3 ; Z=0
         ;*** especificada en el enunciado
 DECOD:
 	
-    MOVE.W D0,-(A7)
-    MOVE.W 6(A7),D0
-    BTST.L #15,D0
+    MOVE.L D0,-(SP)
+    MOVE.W 8(SP),D0
+    BTST #15,D0
     BNE BIT1     
     ;BULCE SI BIT 15 = 1
-    BTST.L #14,D0       ;0  
+    BTST #14,D0       ;0  
     BNE BIT1cero
     MOVE.W #0,8(A7)
     JMP FINAL           ;00 Id HLT
 
 BIT1:   
-    BTST.L #14,D0       ;1
+    BTST #14,D0       ;1
     BNE BIT2 
-    BTST.L #13,D0       ;10
+    BTST #13,D0       ;10
     BNE BIT5
-    BTST.L #12,D0       ;100
+    BTST #12,D0       ;100
     BNE BIT6
-    BTST.L #11,D0       ;1000
+    BTST #11,D0       ;1000
     BNE BIT7
     MOVE.W #4,8(A7)     ;10000 ID COM
     JMP FINAL
  
    
 BIT2: 
-    BTST.L #13,D0       ;11
+    BTST #13,D0       ;11
     BNE BIT3
-    BTST.L #12,D0       ;110
+    BTST #12,D0       ;110
     BNE BIT4
-    MOVE.W #12,8(A7)
+    MOVE.W #12,10(A7)
     JMP FINAL           ;1100 ID MOV
     
 BIT3:
-    MOVE.W #14,8(A7)
+    MOVE.W #14,10(A7)
     JMP FINAL           ;1110 Id LOA
     
 BIT4: 
-    MOVE.W #13,8(A7)
+    MOVE.W #13,10(A7)
     JMP FINAL           ;1101 Id STO    
 
 BIT5:
@@ -491,59 +489,59 @@ BIT5:
     BNE BIT9
     MOVE.W #11,D0       ;1010
     BNE BIT10
-    MOVE.W #8,8(A7)
+    MOVE.W #8,10(A7)
     JMP FINAL           ;10100 ID AND
     
     
 BIT6:
-    BTST.L #11,D0       ;1001
+    BTST #11,D0       ;1001
     BNE BIT8
-    MOVE.W #6,8(A7)
+    MOVE.W #6,10(A7)
     JMP FINAL           ;10010 ID SUB   
     
 BIT7:
-    MOVE.W #5,8(A7)
+    MOVE.W #5,10(A7)
     JMP FINAL           ;10001 ID ADD  
     
 BIT8:  
-    MOVE.W #7,8(A7) 
+    MOVE.W #7,10(A7) 
     JMP FINAL           ;10011 Id NEG 
    
 BIT9:
     MOVE.W #11,D0       ;1011
     BNE BIT11
-    MOVE.W #10,8(A7)
+    MOVE.W #10,10(A7)
     JMP FINAL           ;10110 ID NOT
     
     
 BIT10:
-    MOVE.W #9,8(A7)
+    MOVE.W #9,10(A7)
     JMP FINAL           ;10101 ID OR     
     
 BIT11:
-    MOVE.W #11,8(A7)
+    MOVE.W #11,10(A7)
     JMP FINAL           ;10111 ID SET   
     
       
 BIT1cero:               ;0
-    BTST.L #13,D0       ;01
+    BTST #13,D0       ;01
     BEQ BIT2cero  
-    MOVE.W #3,8(A7)     ;011
+    MOVE.W #3,10(A7)     ;011
     JMP FINAL           ;0110 ID JMI M
     
 BIT2cero:  
-    BTST.L #12,D0       ;010
+    BTST #12,D0       ;010
     BNE BIT3cero
-    MOVE.W #1,8(A7)
+    MOVE.W #1,10(A7)
     JMP FINAL           ;0100 ID JMN M
 
 BIT3cero:
-    MOVE.W #2,8(A7)
+    MOVE.W #2,10(A7)
     JMP FINAL           ;0101 ID JMZ M
     
         
 FINAL:
-    MOVE.W (A7)+,D0
+    MOVE.L (A7)+,D0
     RTS
     ;--- FDECOD: FIN DECOD
     END    START
@@ -562,6 +560,7 @@ FINAL:
 *~Font size~10~
 *~Tab type~1~
 *~Tab size~4~
+
 
 
 
