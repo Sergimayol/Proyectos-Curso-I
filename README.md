@@ -47,7 +47,7 @@
       - Introducción✔️
       - Explicación general
       - Descripción subrutina(falta explicación de la subru)
-      - Tablas subrutinas
+      - Tablas subrutinas✔️
       - Tabla registros
       - Tabla variables
       - Pruebas
