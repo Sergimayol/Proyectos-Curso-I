@@ -45,7 +45,7 @@
       - JMP ELOA✔️
    - Memoria
       - Introducción✔️
-      - Explicación general
+      - Explicación general✔️
       - Descripción subrutina(falta explicación de la subru)
       - Tablas subrutinas✔️
       - Tabla registros✔️
