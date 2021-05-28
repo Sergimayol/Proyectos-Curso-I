@@ -46,7 +46,7 @@
    - Memoria
       - Introducción✔️
       - Explicación general✔️
-      - Descripción subrutina(falta explicación de la subru)
+      - Descripción subrutina✔️
       - Tablas subrutinas✔️
       - Tabla registros✔️
       - Tabla variables
