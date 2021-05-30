@@ -7,7 +7,7 @@
          - Clase mapa
          - Clase ficha✔️
          - Clase lecturaMapa✔️
-         - Clase Laberinto(falta explicar la clase gestionDesplazamiento)
+         - Clase Laberinto✔️
          - Clase Casilla (falta explicar los métodos)
       - Conclusiones
 - Acabar proyecto álgebra ==> solo queda revisar y meterlo todo en una misma carpeta
