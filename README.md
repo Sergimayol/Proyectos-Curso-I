@@ -41,7 +41,7 @@
       - JMP EMOV✔️
       - JMP ESTO✔️
       - JMP ELOA✔️
-   - Memoria
+   - Memoria✔️
       - Introducción✔️
       - Explicación general✔️
       - Descripción subrutina✔️
