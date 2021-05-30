@@ -25,7 +25,7 @@
 - Acabar proyecto estructura de computadores
    - Fase Fetch✔️
    - Fase decodificación✔️
-   - Fase ejecución✔️(Comprobar programa tocho)
+   - Fase ejecución✔️
       - JMP EHLT✔️
       - JMP EJMN✔️
       - JMP EJMZ✔️
@@ -47,10 +47,10 @@
       - Descripción subrutina✔️
       - Tablas subrutinas✔️
       - Tabla registros✔️
-      - Tabla variables
-      - Pruebas
-      - Conclusiones
-      - Código
+      - Tabla variables✔️
+      - Pruebas✔️
+      - Conclusiones✔️
+      - Código✔️
    - Ejemplos de proyecto: 
       - https://github.com/Zygmut/PRAFIN20
       - https://github.com/Zygmut/PRAFIN19RECU
