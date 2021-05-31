@@ -3,8 +3,8 @@
    - Programa✔️
    - Memoria
       - Introducción✔️ 
-      - Diseño
-         - Clase mapa (falta explicar los métodos)
+      - Diseño✔️
+         - Clase mapa✔️
          - Clase ficha✔️
          - Clase lecturaMapa✔️
          - Clase Laberinto✔️
