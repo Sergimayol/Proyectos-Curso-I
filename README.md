@@ -4,7 +4,7 @@
    - Memoria
       - Introducción✔️ 
       - Diseño
-         - Clase mapa
+         - Clase mapa (falta explicar los métodos)
          - Clase ficha✔️
          - Clase lecturaMapa✔️
          - Clase Laberinto✔️
