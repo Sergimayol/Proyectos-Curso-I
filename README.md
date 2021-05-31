@@ -22,7 +22,7 @@
       - b)✔️
       - c)✔️
       - d)✔️
-- Acabar proyecto estructura de computadores
+- Proyecto estructura de computadores✔️
    - Fase Fetch✔️
    - Fase decodificación✔️
    - Fase ejecución✔️
