@@ -8,7 +8,7 @@
          - Clase ficha✔️
          - Clase lecturaMapa✔️
          - Clase Laberinto✔️
-         - Clase Casilla (falta explicar los métodos)
+         - Clase Casilla✔️
       - Conclusiones
 - Acabar proyecto álgebra ==> solo queda revisar y meterlo todo en una misma carpeta
    - Memoria✔️
