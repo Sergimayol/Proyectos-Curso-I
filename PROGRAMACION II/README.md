@@ -1,1 +1,1 @@
-ESTA CARPETA CONTIENE TODO LO RELACIONADO CON PROGRMACION II
+Proyecto final de la asignatura Programación II de 1º de la UIB.
