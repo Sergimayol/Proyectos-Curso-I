@@ -1,5 +1,5 @@
 # Repositorio para proyectos
-- Acabar proyecto programación
+- Proyecto programación II
    - Programa✔️
    - Memoria✔️(Falta revisarla + video explicaión)
       - Introducción✔️ 
@@ -13,7 +13,7 @@
 - Acabar proyecto álgebra ==> solo queda revisar y meterlo todo en una misma carpeta
    - Memoria✔️
    - Apartados del proyecto✔️
-- Proyecto estructura de computadores✔️
+- Proyecto estructura de computadores I✔️
    - Fase Fetch✔️
    - Fase decodificación✔️
    - Fase ejecución✔️
