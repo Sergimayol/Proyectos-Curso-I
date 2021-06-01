@@ -1,7 +1,7 @@
 # Repositorio para proyectos
 - Acabar proyecto programación
    - Programa✔️
-   - Memoria
+   - Memoria✔️(Falta revisarla + video explicaión)
       - Introducción✔️ 
       - Diseño✔️
          - Clase mapa✔️
@@ -9,7 +9,7 @@
          - Clase lecturaMapa✔️
          - Clase Laberinto✔️
          - Clase Casilla✔️
-      - Conclusiones
+      - Conclusiones✔️
 - Acabar proyecto álgebra ==> solo queda revisar y meterlo todo en una misma carpeta
    - Memoria✔️
       - Introducción✔️
