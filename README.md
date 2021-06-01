@@ -6,7 +6,7 @@
       - Diseño✔️
       - Conclusiones✔️
       
-- Acabar proyecto álgebra ==> solo queda revisar y meterlo todo en una misma carpeta
+- Proyecto métodos de álgebra lineal ==> solo queda revisar y meterlo todo en una misma carpeta
    - Memoria✔️
    - Apartados del proyecto✔️
    
