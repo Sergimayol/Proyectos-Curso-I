@@ -1,11 +1,8 @@
 # Repositorio para proyectos
 - Proyecto programación II
    - Programa✔️
-   - Memoria✔️(Falta revisarla + video explicaión)
-      - Introducción✔️ 
-      - Diseño✔️
-      - Conclusiones✔️
-      
+   - Memoria✔️
+    
 - Proyecto métodos de álgebra lineal ==> solo queda revisar y meterlo todo en una misma carpeta
    - Memoria✔️
    - Apartados del proyecto✔️
