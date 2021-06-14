@@ -29,12 +29,17 @@ require(knitr)
 require(ggplot2)
 require(readr)
 require(dplyr)
+require(norstest)
 ```
 ```{r Inicializacion}
 data_city=read_csv("listings.csv", col_types = cols())
+data_city2=read_csv("listings2.csv", col_types = cols())
 data_city$price=as.numeric(gsub(pattern="[\\$]|[,]",replacement="",data_city$price))
+data_city2$price=as.numeric(gsub(pattern="[\\$]|[,]",replacement="",data_city2$price))
 
 data=na.omit(data_city %>% select(id,host_id,neighbourhood,neighbourhood_cleansed,property_type,accommodates,bedrooms,beds,price,minimum_nights,availability_365,number_of_reviews,review_scores_rating))
+data2=na.omit(data_city2%>%
+select(price))
 
 head(data)
 
@@ -58,9 +63,8 @@ data$distrito=gsub(".*/","",data$distrito)
 #se hace un display de las primeras filas y columnas de 'data'
 head(data)
 
-#se borra el dataframe inicial de la memoria
-(data_city) 
 ```
+
 ## Solución ejercicio 1
 
 ```{r ej1}
@@ -89,50 +93,110 @@ intervalos
 ## Solución ejercicio 3
 
 ```{r ej3}
-table(is.na(data$puntuacion_opiniones))
-media_puntuacion_opiniones=mean(data$puntuacion_opiniones)
-sd_puntuacion_opiniones=sd(data$puntuacion_opiniones,na.rm = TRUE)
-n = length(data$puntuacion_opiniones)
-t.test(data$puntuacion_opiniones,mu=0,alternative="two.sided",conf.level = 0.95)->sol.ej3
-sol.ej3$conf.int
-alpha=1-0.95
-intervalos = c(media_puntuacion_opiniones-qt(1-alpha/2,n-1)*sd_puntuacion_opiniones/sqrt(n),media_puntuacion_opiniones+qt(1-alpha/2,n-1)*sd_puntuacion_opiniones/sqrt(n))
-intervalos
-
+head(data$puntuacion_opiniones)
+q95=quantile(data$puntuacion_opiniones,0.95)
+q95
+review_scores_inferior95=data$puntuacion_opiniones<q95
+table(review_scores_inferior95)
+phat=prop.table(table(review_scores_inferior95))[2]
+names(phat)=NULL
+phat
+n=length(review_scores_inferior95)
+n
+alpha=1-0.99
+alpha
+1-alpha/2
+z_cuantil=qnorm(1-alpha/2)
+z_cuantil
+error_estandar_proporcion=sqrt(phat*(1-phat)/n)
+error_estandar_proporcion
+intervalosej3=c(phat-z_cuantil*error_estandar_proporcion,phat-z_cuantil*error_estandar_proporcion)
+intervalosej3
 ```
 
 ## Solución ejercicio 4
 
 ```{r ej4}
-
+t.test(data$puntuacion_opiniones,mu=95,alternative = "less")->sol.test
+sol.test
+muO=95
+media=mean(data$puntuacion_opiniones)
+desv.tip=sd(data$puntuacion_opiniones)
+n2=length(data$puntuacion_opiniones)
+t=(media-muO)/(desv.tip/sqrt(n2))
+t
+pvalor=pt(t,df=n-1)
+pvalor
+sol.test$statistic
+sol.test$p.value
+sol.test$conf.int
 ```
 
 ## Solución ejercicio 5
 
+Para calcular el intervalo de confianza, utilizaremos la siguiente función:
+
 ```{r ej5}
+t.test(data$puntuacion_opiniones,alternative="two.sided",conf.level = 0.95)$conf.int
 
 ```
 
 ## Solución ejercicio 6
 
+Para calcular el contraste de hipótesis para decidir si las desviaciones típicas de los precios de las dos ciudades son iguales o diferentes, utilizaremos la función test de la varianza, que está directamente relacionada con la desviación típica.
+
 ```{r ej6}
 
+var.test(data$precio,data2$price,alternative = "two.sided")
+
 ```
+Como el p-valor del contraste ha sido prácticamente cero, concluimos que tenemos evidencias suficientes para afirmar que las desviaciones típicas de los precios de ambas ciudades son diferentes.
 
 ## Solución ejercicio 7
 
 ```{r ej7}
-
+t.test(data$precio,data2$price,paired=FALSE, var.equal=FALSE, conf.level=0.95, alternative="less")
+var.test(data$precio,data2$price)
+ciudad=c(rep("Val",dim(data)[1]),rep("VW", dim(data2)[1]))
+precio=c(data$precio, data2$price)
+car::leveneTest(precio~ciudad)
 ```
 
 ## Solución ejercicio 8
 
 ```{r ej8}
-
+library(nortest)
+lillie.test(data$precio)
 ```
 
 ## Solución ejercicio 9
+Apartado a:
+Al incio, cuando importamos el dataframe ya omitimos todos los valores NA.
+```{r ej9a}
 
-```{r ej9}
+```
+Apartado b:
+```{r ej9b}
+breaks_precio=fivenum(data$precio)
+breaks_precio
 
+breaks_score=fivenum(data$puntuacion_opiniones)
+breaks_score
+
+clases_precio=cut(data$precio,breaks=5)
+table(clases_precio)
+#Ya que en breaks_precio se repiten los dos últimos da error, por lo que tenemos que seleccionar manualmente el número de breaks que deseamos.
+clases_score=cut(data$puntuacion_opiniones,breaks=5)
+table(clases_score)
+```
+Apartado c:
+```{r ej9c}
+#table(clases_score)
+#table(clases_precio)
+tabla=table(clases_precio,clases_score)
+tabla
+```
+Apartado d:
+```{r ej9d}
+chisq.test(tabla)
 ```
