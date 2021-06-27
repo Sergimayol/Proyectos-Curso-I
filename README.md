@@ -1,7 +1,7 @@
 # Repositorio para proyectos
 - Proyecto programación II 
 - Proyecto métodos de álgebra lineal
-- Proyecto estructura de computadores I✔️
+- Proyecto estructura de computadores I
    - Ejemplos de proyecto: 
       - https://github.com/Zygmut/PRAFIN20
       - https://github.com/Zygmut/PRAFIN19RECU
