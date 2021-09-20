@@ -1,4 +1,4 @@
-# Repositorio para proyectos de 1º Curso de ingeniería informática de la UIB
+# Proyectos de 1º Curso de ingeniería informática de la UIB
 - Proyecto programación II 
 - Proyecto métodos de álgebra lineal
 - Proyecto estructura de computadores I
